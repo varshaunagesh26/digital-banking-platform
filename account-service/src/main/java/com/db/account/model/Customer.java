@@ -1,33 +1,22 @@
 package com.db.account.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import com.db.account.model.Branch;
-import com.db.account.model.Customer;
-import jakarta.persistence.Entity;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Data
 @Builder
 @Getter
 @Setter
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long customerId;
-    private String customerName;
+    private long customerNumber;
+    private String firstName;
+    private String lastName;
     private Date customerDOB;
     private long phone;
-    private double accountBalance;
     private String customerEmail;
-
+    private String customerAddress;
+    private List<Account> accounts;
 }

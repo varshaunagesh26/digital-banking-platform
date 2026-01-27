@@ -1,3 +1,37 @@
 spring:
   application:
     name: account-service
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=account
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: account
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    schemas: account
+    baseline-version: 0
+    validate-on-migrate: true
+    out-of-order: false
+    placeholder-replacement: true
+    placeholders:
+      database: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Automatically update schema based on entities
+      show-sql: true       # Show SQL queries in logs
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  logging:
+    level:
+      org.flywaydb: DEBUG
+      org.springframework.jdbc: DEBUG

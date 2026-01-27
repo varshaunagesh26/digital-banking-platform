@@ -1,10 +1,11 @@
 package com.db.account.repository;
 
-import com.db.account.entity.Account;
+import com.db.account.entity.Branch;
+import com.db.account.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface BranchRepository extends JpaRepository<Branch, Long> {
 }
 
