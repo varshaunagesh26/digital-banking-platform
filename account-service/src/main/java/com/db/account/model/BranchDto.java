@@ -11,10 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Branch {
+public class BranchDto {
     private long branchCode;
     private String branchName;
     private String branchAddress;
     private String branchIFSC;
-    private List<Account> accounts;
+    private List<AccountDto> accounts;
 }

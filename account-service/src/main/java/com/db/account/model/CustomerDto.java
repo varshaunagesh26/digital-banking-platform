@@ -10,13 +10,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
-    private long customerNumber;
+public class CustomerDto {
+    private long customerId;
     private String firstName;
     private String lastName;
     private Date customerDOB;
     private long phone;
     private String customerEmail;
     private String customerAddress;
-    private List<Account> accounts;
+    private List<AccountDto> accounts;
 }

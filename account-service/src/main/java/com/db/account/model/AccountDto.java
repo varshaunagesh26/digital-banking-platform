@@ -8,12 +8,11 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account {
+public class AccountDto {
     private Long accountNumber;
-    private String accountName;
     private String accountType;
-    private Customer accountHolder;
-    private Branch accountBranch;
+    private CustomerDto accountHolder;
+    private BranchDto accountBranch;
     private double accountBalance;
 
 }

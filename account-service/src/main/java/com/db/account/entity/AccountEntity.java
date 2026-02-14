@@ -10,22 +10,32 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Account {
+public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "account_number")
     private long accountNumber;
-    private String accountName;
+
+    @Column(name = "account_type")
     private String accountType;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name="accountHolderId", referencedColumnName = "id"
     )
-    private Customer accountHolder;//It is reference not an actual id
+    private CustomerEntity accountHolder;//It is reference not an actual id
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "branchId", referencedColumnName = "id"
     )
-    private Branch accountBranch;
+    private BranchEntity accountBranch;
+
+    @Column(name = "account_balance")
     private double accountBalance;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

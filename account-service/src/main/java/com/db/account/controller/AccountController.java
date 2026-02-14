@@ -1,47 +1,48 @@
 package com.db.account.controller;
 
-import com.db.account.model.Account;
+import com.db.account.model.AccountDto;
+
 import java.util.List;
+
 import com.db.account.service.AccountService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
+@RequestMapping("/accounts")
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    // Save operation
-    @PostMapping("/accounts")
-    public Account saveAccount(@Valid @RequestBody Account account) {
-        return accountService.saveAccount(account);
+    @PostMapping
+    public AccountDto createAccountForBranchAndCustomer(@RequestParam long branchCode, @RequestParam long customerId, @Valid @RequestBody AccountDto accountDto) throws Exception {
+        return accountService.createAccountForBranchAndCustomer(branchCode, customerId, accountDto);
     }
 
-    // Read operation
-    @GetMapping("/accounts")
-    public List<Account> fetchAccountList() {
-        return accountService.fetchAccountList();
+    /**
+     * fina all non deleted account
+     *
+     * @return
+     */
+    @GetMapping
+    public List<AccountDto> findAllAccounts() {
+        return accountService.findAllActiveAccounts();
     }
 
-    // Read operation - Get by ID
-    @GetMapping("/accounts/{id}")
-    public Account fetchAccountById(@PathVariable("id") Long accountId) {
-        return accountService.fetchAccountById(accountId);
+    @GetMapping("/{accountNumber}")
+    public AccountDto findAccountById(@PathVariable("accountNumber") Long accountId) throws Exception {
+        return accountService.findAccountById(accountId);
     }
 
-    // Update operation
-    @PutMapping("/accounts/{id}")
-    public Account updateAccount(@RequestBody Account account,
-                                 @PathVariable("id") Long accountId) {
-        return accountService.updateAccount(account, accountId);
+    @PatchMapping("/{accountNumber}")
+    public AccountDto updatePartiallyFromDto(@PathVariable("accountNumber") long accountNumber, @Valid @RequestBody AccountDto accountDto) throws Exception {
+        return accountService.updatePartiallyFromDto(accountNumber, accountDto);
     }
 
-    // Delete operation
-    @DeleteMapping("/accounts/{id}")
-    public String deleteAccountById(@PathVariable("id") Long accountId) {
-        accountService.deleteAccountById(accountId);
-        return "Deleted Successfully";
+    @DeleteMapping("/{accountNumber}")
+    public void deleteAccount(@PathVariable("accountNumber") Long accountId) throws Exception {
+        accountService.deleteAccount(accountId);
     }
 }

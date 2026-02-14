@@ -1,0 +1,9 @@
+ALTER TABLE account
+ADD COLUMN is_active BOOLEAN;
+
+ALTER TABLE branch
+ADD COLUMN is_active BOOLEAN;
+
+ALTER TABLE customer
+ADD COLUMN is_active BOOLEAN;
+
