@@ -1,5 +1,5 @@
 CREATE TABLE customer(
-id bigint PRIMARY KEY,
+id serial PRIMARY KEY,
 customer_id bigint NOT NULL,
 first_name varchar(30) NOT NULL,
 last_name varchar(30),

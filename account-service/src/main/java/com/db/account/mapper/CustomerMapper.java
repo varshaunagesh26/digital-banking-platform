@@ -1,8 +1,13 @@
 package com.db.account.mapper;
 
+import com.db.account.entity.AccountEntity;
 import com.db.account.entity.CustomerEntity;
 import com.db.account.model.CustomerDto;
 import org.mapstruct.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 
@@ -20,11 +25,29 @@ import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 )
 public interface CustomerMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
     CustomerEntity toEntity(CustomerDto customerDto, @Context CycleAvoidingMappingContext mappingContext);
-    CustomerDto toDto(CustomerEntity customerEntity,  @Context CycleAvoidingMappingContext mappingContext);
+
+    @Mapping(target = "accountNumbers", expression = "java(extractAccountNumber(customerEntity.getCustomerAccounts()))")
+    CustomerDto toDto(CustomerEntity customerEntity, @Context CycleAvoidingMappingContext mappingContext);
+
+    default List<Long> extractAccountNumber(List<AccountEntity> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return accounts.stream()
+                .map(AccountEntity::getAccountNumber)
+                .collect(Collectors.toList());
+    }
+
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "customerId", ignore = true)
-    public abstract void updatePartiallyFromDto(
+    @Mapping(target = "customerAccounts", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Named("updateFromDtoPartially")
+    void updateFromDtoPartially(
             CustomerDto customerDto, @MappingTarget CustomerEntity customerEntity);
 }

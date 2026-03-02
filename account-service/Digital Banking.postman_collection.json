@@ -1,0 +1,1392 @@
+{
+  "info": {
+    "_postman_id": "5b63797f-5cfc-43fc-9e2d-bc8db89ff3ea",
+    "name": "Digital Banking",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50723630",
+    "_collection_link": "https://go.postman.co/collection/50723630-5b63797f-5cfc-43fc-9e2d-bc8db89ff3ea?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Branches",
+      "item": [
+        {
+          "name": "Get All Branches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Branch By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches/1013",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches",
+                "1013"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Accounts For Branch",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches/1006/accounts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches",
+                "1006",
+                "accounts"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Branch By Id For Non-Existing Branch Code",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches/1013",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches",
+                "1013"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Branch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchCode\" : 1011,\r\n    \"branchName\" : \"Canara Bank Shanthi Nagara\",\r\n    \"branchAddress\" : \"4st Main 3rd Cross,Shanthi Nagar, Hassan-573201\",\r\n    \"branchIFSC\" : \"CNRB0015405\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Branch for Existing Branch Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchCode\" : 1002,\r\n    \"branchName\" : \"HDFC BTM Layout\",\r\n    \"branchAddress\" : \"No. 23, 1st Stage, BTM Layout, Bengaluru - 560029\",\r\n    \"branchIFSC\" : \"HDFC0001002\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Branch with Empty Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchCode\" : 1012,\r\n    \"branchName\" : \"SBI BTM Layout\",\r\n    \"branchAddress\" : \"No. 36, 5st Stage, BTM Layout, Bengaluru - 560029\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Branch Address",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchAddress\" : \"No. 48, 5th Cross, 2nd Main, Shanthinagar, Hassan-573201\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches/1011",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches",
+                "1011"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Branch Name",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchAddress\" : \"4st Main 3rd Cross,Shanthi Nagar, Mysuru-573306\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches?branchCode=1013",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1013"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Branch For Non-Existing Branch Code",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"branchName\" : \"HDFC Bank Shanthi Nagara\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches?branchCode=1015",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1015"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Branch",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/branches?branchCode=1011",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1011"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerId\" : 7112,\r\n    \"firstName\" : \"Suma\",\r\n    \"lastName\": \"C N\",\r\n    \"customerDOB\": \"1979-10-10\",\r\n    \"phone\" : 8762622988,\r\n    \"customerEmail\": \"suma_cn@gmail.com\",\r\n    \"customerAddress\" : \"1st main, Shanthi nagar, Hassan\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Existing Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerId\" : 1234567,\r\n    \"firstName\" : \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"customerDOB\": \"1990-01-01\",\r\n    \"phone\" : 9517538520,\r\n    \"customerEmail\": \"johndoe@example.com\",\r\n    \"customerAddress\" : \"1234 Elm Street, Springfield, IL, 62704\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer By Customer Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/7112",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "7112"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Accounts For Customer",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/7112/accounts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "7112",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer By Customer Id For Non-Existing Customer",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/7112",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "7112"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer Phone",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"phone\" : 9882474994\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/1598368",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1598368"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer Address",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerAddress\" : \"1234 Elm St\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/1598368",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1598368"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Multiple Fields",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerAddress\" : \"1234 Elm St\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/1598368",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1598368"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/1598368",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1598368"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create Account For Branch & Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountNumber\" : 6004,\r\n    \"accountType\": \"current\",\r\n    \"accountBalance\": 200000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts?branchCode=1010&customerId=7111",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1010"
+                },
+                {
+                  "key": "customerId",
+                  "value": "7111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account For Non-Existing Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountNumber\" : 6004,\r\n    \"accountType\": \"current\",\r\n    \"accountBalance\": 200000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts?branchCode=1010&customerId=7111",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1010"
+                },
+                {
+                  "key": "customerId",
+                  "value": "7111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account For Non-Existing Branch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountNumber\" : 6004,\r\n    \"accountType\": \"current\",\r\n    \"accountBalance\": 200000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts?branchCode=1010&customerId=7111",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ],
+              "query": [
+                {
+                  "key": "branchCode",
+                  "value": "1010"
+                },
+                {
+                  "key": "customerId",
+                  "value": "7111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Accounts",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Accounts By Account Number",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Account Balance",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountBalance\" : 65000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts/6003",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "6003"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Account Type",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountType\" : \"Salary\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts/6001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "6001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Account Holder",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountHolder\" : {\"customerId\" : 7111}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts/6001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "6001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/accounts/6003",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "6003"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

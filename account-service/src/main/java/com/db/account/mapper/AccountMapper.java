@@ -20,17 +20,27 @@ import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 )
 public interface AccountMapper {
 
-   AccountEntity toEntity(AccountDto accountDto, @Context CycleAvoidingMappingContext context);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    AccountEntity toEntity(AccountDto accountDto, @Context CycleAvoidingMappingContext context);
 
+    @Named("toDto")
     AccountDto toDto(AccountEntity accountEntity, @Context CycleAvoidingMappingContext context);
 
 
+    /**
+     * patch: type, bal, holder and branch
+     *
+     * @param accountDto
+     * @param accountEntity
+     */
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "accountNumber" , ignore = true)
+    @Mapping(target = "accountNumber", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @Mapping(target = "accountHolder", qualifiedByName = "updateFromDtoPartially")
+    @Mapping(target = "accountBranch", qualifiedByName = "updateFromDtoPartially")
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Named("updateFromDtoPartially")
     public abstract void updateFromDtoPartially(
             AccountDto accountDto, @MappingTarget AccountEntity accountEntity);
 }
-
-
-
-

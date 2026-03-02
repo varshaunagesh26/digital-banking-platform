@@ -1,5 +1,6 @@
 package com.db.account.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Data
@@ -9,10 +10,20 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDto {
+
+    @Schema(name = "Account Number")
     private Long accountNumber;
+
+    @Schema(name = "Account Type")
     private String accountType;
+
+    @Schema(name = "Account Holder")
     private CustomerDto accountHolder;
+
+    @Schema(name = "Account Branch")
     private BranchDto accountBranch;
-    private double accountBalance;
+
+    @Schema(name = "Account Balance")
+    private Double accountBalance;
 
 }

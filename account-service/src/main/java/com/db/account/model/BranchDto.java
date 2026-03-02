@@ -1,7 +1,7 @@
 package com.db.account.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 import java.util.List;
 
 @Getter
@@ -12,9 +12,19 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class BranchDto {
-    private long branchCode;
+
+    @Schema(name = "Branch Code")
+    private Long branchCode;
+
+    @Schema(name = "Branch Name")
     private String branchName;
+
+    @Schema(name = "Branch Address")
     private String branchAddress;
+
+    @Schema(name = "Branch IFSC")
     private String branchIFSC;
-    private List<AccountDto> accounts;
+
+    @Schema(name = "Account Number")
+    private List<Long> accountNumbers;
 }

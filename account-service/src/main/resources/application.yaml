@@ -17,6 +17,17 @@ spring:
       schema: account
 
   logging:
+    config: classpath:logback-spring.xml
     level:
       org:
         flywaydb: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+    doc-expansion: none
+    model-and-view-allowed: true
