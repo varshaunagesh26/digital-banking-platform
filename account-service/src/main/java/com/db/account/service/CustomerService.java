@@ -30,13 +30,7 @@ public class CustomerService {
 
     private final AccountMapper accountMapper;
 
-    /***
-     *
-     * @param customerDto
-     * @return
-     * @throws Exception
-     */
-    public CustomerDto createCustomer(CustomerDto customerDto) throws Exception {
+    public CustomerDto createCustomer(CustomerDto customerDto){
 
         log.atInfo().log("creating a customer");
 
@@ -45,13 +39,7 @@ public class CustomerService {
         return customerMapper.toDto(newCustomer, new CycleAvoidingMappingContext());
     }
 
-    /**
-     *
-     * @param customerId
-     * @return
-     * @throws Exception
-     */
-    public CustomerDto getCustomerByCustomerId(Long customerId) throws Exception {
+    public CustomerDto getCustomerByCustomerId(Long customerId){
 
         log.atInfo().log("getting customer by customer id: {}", customerId);
 
@@ -66,13 +54,7 @@ public class CustomerService {
         return customerMapper.toDto(customer.get(), new CycleAvoidingMappingContext());
     }
 
-
-    /***
-     *
-     * @return
-     * @throws Exception
-     */
-    public List<CustomerDto> getAllCustomers() throws Exception {
+    public List<CustomerDto> getAllCustomers(){
 
         log.atInfo().log("getting all customers");
 
@@ -80,16 +62,10 @@ public class CustomerService {
 
         return customers.stream()
                 .map(customer -> customerMapper.toDto(customer, new CycleAvoidingMappingContext()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    /***
-     *
-     * @param customerId
-     * @return
-     * @throws Exception
-     */
-    public List<AccountDto> getAllAccountsForCustomer(Long customerId) throws Exception {
+    public List<AccountDto> getAllAccountsForCustomer(Long customerId){
 
         log.atInfo().log("getting account for customer id: {}", customerId);
 
@@ -105,14 +81,7 @@ public class CustomerService {
 
     }
 
-    /**
-     *
-     * @param customerId
-     * @param customerDto
-     * @return
-     * @throws Exception
-     */
-    public CustomerDto updateCustomer(Long customerId, CustomerDto customerDto) throws Exception {
+    public CustomerDto updateCustomer(Long customerId, CustomerDto customerDto){
 
         log.atInfo().log("updating customer with customer id: {}", customerId);
 
@@ -123,12 +92,7 @@ public class CustomerService {
         return customerMapper.toDto(existingCustomer, new CycleAvoidingMappingContext());
     }
 
-    /**
-     *
-     * @param customerId
-     * @throws Exception
-     */
-    public void deleteCustomer(Long customerId) throws Exception {
+    public void deleteCustomer(Long customerId){
 
         log.atInfo().log("deleting customer with customer id: {}", customerId);
 

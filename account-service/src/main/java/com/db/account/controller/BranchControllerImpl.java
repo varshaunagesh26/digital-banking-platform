@@ -17,37 +17,37 @@ public class BranchControllerImpl implements BranchControllerSpec {
     private final BranchService branchService;
 
     @Override
-    public ResponseEntity<BranchDto> createBranch(BranchDto branchDto) throws Exception {
+    public ResponseEntity<BranchDto> createBranch(BranchDto branchDto){
         return new ResponseEntity<>(
                 branchService.createBranch(branchDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<List<BranchDto>> getAllBranches() throws Exception {
+    public ResponseEntity<List<BranchDto>> getAllBranches(){
         return new ResponseEntity<>(
                 branchService.getAllBranches(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<AccountDto>> getAllAccountsForBranch(Long branchCode) throws Exception {
+    public ResponseEntity<List<AccountDto>> getAllAccountsForBranch(Long branchCode){
         return new ResponseEntity<>(
                 branchService.getAllAccountsForABranch(branchCode), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<BranchDto> getBranchByBranchCode(Long branchCode) throws Exception {
+    public ResponseEntity<BranchDto> getBranchByBranchCode(Long branchCode){
         return new ResponseEntity<>(
                 branchService.getBranchByBranchCode(branchCode), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<BranchDto> updateBranch(Long branchCode, BranchDto branchDto) throws Exception {
+    public ResponseEntity<BranchDto> updateBranch(Long branchCode, BranchDto branchDto){
         return new ResponseEntity<>(
                 branchService.updateBranch(branchCode, branchDto), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity deleteBranch(Long branchCode) throws Exception {
+    public ResponseEntity deleteBranch(Long branchCode){
         branchService.deleteBranch(branchCode);
         return new ResponseEntity<>(
                 HttpStatus.NO_CONTENT);

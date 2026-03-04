@@ -28,7 +28,7 @@ public interface AccountControllerSpec {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<AccountDto> createAccountForBranchAndCustomer(
             @RequestParam Long branchCode, @RequestParam Long customerId,
-            @Validated @RequestBody AccountDto accountDto) throws Exception;
+            @Validated @RequestBody AccountDto accountDto);
 
 
     @GetMapping(path = "/api/v1/accounts/{accountNumber}",
@@ -42,7 +42,7 @@ public interface AccountControllerSpec {
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<AccountDto> getAccountByAccountNumber(
-            @PathVariable Long accountNumber) throws Exception;
+            @PathVariable Long accountNumber);
 
 
     @GetMapping(path = "/api/v1/accounts",
@@ -72,7 +72,7 @@ public interface AccountControllerSpec {
     ResponseEntity<AccountDto> updateAccount(
             @Parameter(description = "Account number", required = true)
             @PathVariable Long accountNumber,
-            @RequestBody AccountDto accountDto)throws Exception;
+            @RequestBody AccountDto accountDto);
 
     @DeleteMapping("/api/v1/accounts/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
@@ -84,5 +84,5 @@ public interface AccountControllerSpec {
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<AccountDto> deleteAccount(
-            @PathVariable Long accountNumber) throws Exception;
+            @PathVariable Long accountNumber);
 }

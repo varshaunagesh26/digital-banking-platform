@@ -28,12 +28,6 @@ public interface AccountMapper {
     AccountDto toDto(AccountEntity accountEntity, @Context CycleAvoidingMappingContext context);
 
 
-    /**
-     * patch: type, bal, holder and branch
-     *
-     * @param accountDto
-     * @param accountEntity
-     */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "accountNumber", ignore = true)
     @Mapping(target = "isActive", ignore = true)
@@ -41,6 +35,6 @@ public interface AccountMapper {
     @Mapping(target = "accountBranch", qualifiedByName = "updateFromDtoPartially")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Named("updateFromDtoPartially")
-    public abstract void updateFromDtoPartially(
+    void updateFromDtoPartially(
             AccountDto accountDto, @MappingTarget AccountEntity accountEntity);
 }

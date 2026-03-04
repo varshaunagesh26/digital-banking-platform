@@ -6,9 +6,7 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
         </encoder>
     </appender>
-    <!--  <encoder>-->
-    <!--    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-    <!--  </encoder>-->
+
     <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>

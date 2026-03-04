@@ -34,7 +34,7 @@ public interface CustomerControllerSpec {
             content = @Content(schema = @Schema(implementation = CustomerDto.class))
     )
     ResponseEntity<CustomerDto> createCustomer(
-            @RequestBody CustomerDto customerDto) throws Exception;
+            @RequestBody CustomerDto customerDto);
 
 
     @GetMapping(path = "/api/v1/customers",
@@ -47,7 +47,7 @@ public interface CustomerControllerSpec {
             content = @Content(schema = @Schema(implementation = CustomerDto.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<CustomerDto>> getAllCustomers() throws Exception;
+    ResponseEntity<List<CustomerDto>> getAllCustomers();
 
 
     @GetMapping(path = "/api/v1/customers/{customerId}",
@@ -62,8 +62,7 @@ public interface CustomerControllerSpec {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<CustomerDto> getCustomerByCustomerId(
             @Parameter(description = "Customer Id", required = true)
-            @PathVariable Long customerId
-    ) throws Exception;
+            @PathVariable Long customerId);
 
     @GetMapping(path = "/api/v1/customers/{customerId}/accounts",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,7 +76,7 @@ public interface CustomerControllerSpec {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<List<AccountDto>> getAllAccountsForCustomer(
             @Parameter(description = "Customer Id", required = true)
-            @PathVariable Long customerId) throws Exception;
+            @PathVariable Long customerId);
 
 
     @PatchMapping(path = "/api/v1/customers/{customerId}",
@@ -94,8 +93,7 @@ public interface CustomerControllerSpec {
     ResponseEntity<CustomerDto> updateCustomer(
             @Parameter(description = "Customer Id", required = true)
             @PathVariable Long customerId,
-            @RequestBody CustomerDto customerDto
-    ) throws Exception;
+            @RequestBody CustomerDto customerDto);
 
 
     @DeleteMapping("/api/v1/customers/{customerId}")
@@ -109,5 +107,5 @@ public interface CustomerControllerSpec {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     ResponseEntity<CustomerDto> deleteCustomer(
             @Parameter(description = "Customer Id", required = true)
-            @PathVariable Long customerId) throws Exception;
+            @PathVariable Long customerId);
 }

@@ -7,7 +7,6 @@ import org.mapstruct.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 
@@ -38,7 +37,7 @@ public interface CustomerMapper {
         }
         return accounts.stream()
                 .map(AccountEntity::getAccountNumber)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

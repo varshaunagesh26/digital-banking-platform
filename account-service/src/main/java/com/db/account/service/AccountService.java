@@ -35,15 +35,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
 
 
-    /**
-     *
-     * @param branchCode
-     * @param customerId id of the customer
-     * @param accountDto
-     * @return
-     * @throws Exception
-     */
-    public AccountDto createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto) throws Exception {
+    public AccountDto createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto){
 
         log.atInfo().log("creating account for customer with id: {} for branch: {}", customerId, branchCode);
 
@@ -53,8 +45,6 @@ public class AccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found: " + customerId));
 
         AccountEntity accountEntity = accountMapper.toEntity(accountDto, new CycleAvoidingMappingContext());
-        //accountEntity.setAccountBranch(branchEntity);
-        //accountEntity.setAccountHolder(customerEntity);
         branchEntity.addAccount(accountEntity);
         customerEntity.addAccount(accountEntity);
 
@@ -63,29 +53,20 @@ public class AccountService {
 
     }
 
-
-    /***
-     *
-     * @return
-     */
     public List<AccountDto> getAllActiveAccounts() {
 
         log.atInfo().log("getting all active accounts");
 
         List<AccountEntity> activeAccounts = accountRepository.findAllByIsActiveTrue();
 
-        return activeAccounts.stream().map(account -> accountMapper.toDto(account, new CycleAvoidingMappingContext())).collect(Collectors.toList());
+        return activeAccounts.stream()
+                .map(account ->
+                        accountMapper.toDto(account, new CycleAvoidingMappingContext()))
+                .toList();
 
     }
 
-
-    /***
-     *
-     * @param accountNumber
-     * @return
-     * @throws Exception
-     */
-    public AccountDto getAccountByAccountNumber(Long accountNumber) throws Exception {
+    public AccountDto getAccountByAccountNumber(Long accountNumber){
 
         log.atInfo().log("getting account by account number: {}", accountNumber);
 
@@ -100,7 +81,7 @@ public class AccountService {
     }
 
 
-    public AccountDto updateAccount(Long accountNumber, AccountDto accountDto) throws Exception {
+    public AccountDto updateAccount(Long accountNumber, AccountDto accountDto){
 
         log.atInfo().log("updating account by account number: {}", accountNumber);
 
@@ -125,13 +106,7 @@ public class AccountService {
         return accountMapper.toDto(accountEntity, new CycleAvoidingMappingContext());
     }
 
-
-    /***
-     *
-     * @param accountNumber
-     * @throws Exception
-     */
-    public void deleteAccount(Long accountNumber) throws Exception {
+    public void deleteAccount(Long accountNumber) {
 
         log.atInfo().log("deleting account by account number: {}", accountNumber);
 

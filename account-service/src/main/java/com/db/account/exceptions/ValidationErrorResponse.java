@@ -23,8 +23,8 @@ public class ValidationErrorResponse extends ErrorResponse {
             String message, String path, List<ValidationError> errors, String exception) {
         super(
                 Instant.now(),
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase(),
+                HttpStatus.UNPROCESSABLE_CONTENT.value(),
+                HttpStatus.UNPROCESSABLE_CONTENT.getReasonPhrase(),
                 message,
                 path,
                 null,

@@ -17,13 +17,13 @@ public class AccountControllerImpl implements AccountControllerSpec {
     private final AccountService accountService;
 
     @Override
-    public ResponseEntity<AccountDto> createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto) throws Exception {
+    public ResponseEntity<AccountDto> createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto){
         return new ResponseEntity<>(
                 accountService.createAccountForBranchAndCustomer(branchCode, customerId, accountDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<AccountDto> getAccountByAccountNumber(Long accountNumber) throws Exception {
+    public ResponseEntity<AccountDto> getAccountByAccountNumber(Long accountNumber){
         return new ResponseEntity<>(
                 accountService.getAccountByAccountNumber(accountNumber), HttpStatus.OK);
     }
@@ -35,13 +35,13 @@ public class AccountControllerImpl implements AccountControllerSpec {
     }
 
     @Override
-    public ResponseEntity<AccountDto> updateAccount(Long accountNumber, AccountDto accountDto) throws Exception {
+    public ResponseEntity<AccountDto> updateAccount(Long accountNumber, AccountDto accountDto){
         return new ResponseEntity<>(
                 accountService.updateAccount(accountNumber, accountDto), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity deleteAccount(Long accountNumber) throws Exception {
+    public ResponseEntity deleteAccount(Long accountNumber){
         accountService.deleteAccount(accountNumber);
         return new ResponseEntity<>(
                 HttpStatus.NO_CONTENT);

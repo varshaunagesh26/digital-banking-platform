@@ -30,7 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String INPUT_VALIDATION_FAILED = "Input validation failed.";
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
     public ResponseEntity<ValidationErrorResponse> handleConstraintViolation(
             ConstraintViolationException ex, WebRequest request) {
         log.debug(
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .errors(errors)
                         .build();
 
-        return ResponseEntity.unprocessableEntity().body(validationErrorResponse);
+        return ResponseEntity.unprocessableContent().body(validationErrorResponse);
     }
 
 
@@ -105,6 +105,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                         .message(violation.getMessage())
                                         .invalidValue((Serializable) violation.getInvalidValue())
                                         .build())
-                .collect(toList());
+                .toList();
     }
 }
