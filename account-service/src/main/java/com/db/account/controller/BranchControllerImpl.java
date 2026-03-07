@@ -1,8 +1,8 @@
 package com.db.account.controller;
 
-import com.db.account.model.AccountDto;
-import com.db.account.model.BranchDto;
 import com.db.account.service.BranchService;
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Branch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,31 +17,31 @@ public class BranchControllerImpl implements BranchControllerSpec {
     private final BranchService branchService;
 
     @Override
-    public ResponseEntity<BranchDto> createBranch(BranchDto branchDto){
+    public ResponseEntity<Branch> createBranch(Branch branchDto){
         return new ResponseEntity<>(
                 branchService.createBranch(branchDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<List<BranchDto>> getAllBranches(){
+    public ResponseEntity<List<Branch>> getAllBranches(){
         return new ResponseEntity<>(
                 branchService.getAllBranches(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<AccountDto>> getAllAccountsForBranch(Long branchCode){
+    public ResponseEntity<List<Account>> getAllAccountsForBranch(Long branchCode){
         return new ResponseEntity<>(
                 branchService.getAllAccountsForABranch(branchCode), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<BranchDto> getBranchByBranchCode(Long branchCode){
+    public ResponseEntity<Branch> getBranchByBranchCode(Long branchCode){
         return new ResponseEntity<>(
                 branchService.getBranchByBranchCode(branchCode), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<BranchDto> updateBranch(Long branchCode, BranchDto branchDto){
+    public ResponseEntity<Branch> updateBranch(Long branchCode, Branch branchDto){
         return new ResponseEntity<>(
                 branchService.updateBranch(branchCode, branchDto), HttpStatus.OK);
     }

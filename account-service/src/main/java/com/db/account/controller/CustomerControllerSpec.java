@@ -1,7 +1,8 @@
 package com.db.account.controller;
 
-import com.db.account.model.AccountDto;
-import com.db.account.model.CustomerDto;
+
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Customer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,16 +26,16 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "201",
             description = "Customer created",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Customer updating",
             required = true,
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
-    ResponseEntity<CustomerDto> createCustomer(
-            @RequestBody CustomerDto customerDto);
+    ResponseEntity<Customer> createCustomer(
+            @RequestBody Customer customerDto);
 
 
     @GetMapping(path = "/api/v1/customers",
@@ -44,10 +45,10 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "200",
             description = "Returned all customers",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<CustomerDto>> getAllCustomers();
+    ResponseEntity<List<Customer>> getAllCustomers();
 
 
     @GetMapping(path = "/api/v1/customers/{customerId}",
@@ -57,10 +58,10 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "200",
             description = "Returned customer by customer id",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<CustomerDto> getCustomerByCustomerId(
+    ResponseEntity<Customer> getCustomerByCustomerId(
             @Parameter(description = "Customer Id", required = true)
             @PathVariable Long customerId);
 
@@ -71,10 +72,10 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "200",
             description = "Returned all accounts of a customer",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<AccountDto>> getAllAccountsForCustomer(
+    ResponseEntity<List<Account>> getAllAccountsForCustomer(
             @Parameter(description = "Customer Id", required = true)
             @PathVariable Long customerId);
 
@@ -87,13 +88,13 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "200",
             description = "Customer is updated",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<CustomerDto> updateCustomer(
+    ResponseEntity<Customer> updateCustomer(
             @Parameter(description = "Customer Id", required = true)
             @PathVariable Long customerId,
-            @RequestBody CustomerDto customerDto);
+            @RequestBody Customer customerDto);
 
 
     @DeleteMapping("/api/v1/customers/{customerId}")
@@ -102,10 +103,10 @@ public interface CustomerControllerSpec {
     @ApiResponse(
             responseCode = "204",
             description = "Customer deleted",
-            content = @Content(schema = @Schema(implementation = CustomerDto.class))
+            content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<CustomerDto> deleteCustomer(
+    ResponseEntity<Customer> deleteCustomer(
             @Parameter(description = "Customer Id", required = true)
             @PathVariable Long customerId);
 }

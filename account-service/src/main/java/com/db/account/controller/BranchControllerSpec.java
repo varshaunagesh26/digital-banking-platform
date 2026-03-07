@@ -1,8 +1,7 @@
 package com.db.account.controller;
 
-
-import com.db.account.model.AccountDto;
-import com.db.account.model.BranchDto;
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Branch;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,8 +28,8 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<BranchDto> createBranch(
-            @Validated @RequestBody BranchDto branchDto);
+    ResponseEntity<Branch> createBranch(
+            @Validated @RequestBody Branch branchDto);
 
 
     @GetMapping(path = "/api/v1/branches",
@@ -43,7 +42,7 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<BranchDto>> getAllBranches();
+    ResponseEntity<List<Branch>> getAllBranches();
 
 
     @GetMapping(path = "/api/v1/branches/{branchCode}/accounts",
@@ -56,7 +55,7 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<AccountDto>> getAllAccountsForBranch(
+    ResponseEntity<List<Account>> getAllAccountsForBranch(
             @PathVariable Long branchCode);
 
 
@@ -70,7 +69,7 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<BranchDto> getBranchByBranchCode(
+    ResponseEntity<Branch> getBranchByBranchCode(
             @PathVariable Long branchCode);
 
 
@@ -85,10 +84,10 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<BranchDto> updateBranch(
+    ResponseEntity<Branch> updateBranch(
             @Parameter(description = "Branch Code", required = true)
             @PathVariable Long branchCode,
-            @RequestBody BranchDto branchDto);
+            @RequestBody Branch branchDto);
 
 
     @DeleteMapping("/api/v1/branches/{branchCode}")
@@ -100,5 +99,5 @@ public interface BranchControllerSpec {
             content = @Content(schema = @Schema(implementation = BranchControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<BranchDto> deleteBranch(@PathVariable Long branchCode);
+    ResponseEntity<Branch> deleteBranch(@PathVariable Long branchCode);
 }

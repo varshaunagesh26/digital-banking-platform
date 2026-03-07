@@ -4,19 +4,18 @@ import com.db.account.exceptions.EntityAlreadyDeletedException;
 import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
 import com.db.account.mapper.CycleAvoidingMappingContext;
-import com.db.account.model.AccountDto;
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Customer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.db.account.model.CustomerDto;
 import com.db.account.entity.CustomerEntity;
 import com.db.account.repository.CustomerRepository;
 import com.db.account.mapper.CustomerMapper;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -30,7 +29,7 @@ public class CustomerService {
 
     private final AccountMapper accountMapper;
 
-    public CustomerDto createCustomer(CustomerDto customerDto){
+    public Customer createCustomer(Customer customerDto){
 
         log.atInfo().log("creating a customer");
 
@@ -39,7 +38,7 @@ public class CustomerService {
         return customerMapper.toDto(newCustomer, new CycleAvoidingMappingContext());
     }
 
-    public CustomerDto getCustomerByCustomerId(Long customerId){
+    public Customer getCustomerByCustomerId(Long customerId){
 
         log.atInfo().log("getting customer by customer id: {}", customerId);
 
@@ -54,7 +53,7 @@ public class CustomerService {
         return customerMapper.toDto(customer.get(), new CycleAvoidingMappingContext());
     }
 
-    public List<CustomerDto> getAllCustomers(){
+    public List<Customer> getAllCustomers(){
 
         log.atInfo().log("getting all customers");
 
@@ -65,7 +64,7 @@ public class CustomerService {
                 .toList();
     }
 
-    public List<AccountDto> getAllAccountsForCustomer(Long customerId){
+    public List<Account> getAllAccountsForCustomer(Long customerId){
 
         log.atInfo().log("getting account for customer id: {}", customerId);
 
@@ -81,7 +80,7 @@ public class CustomerService {
 
     }
 
-    public CustomerDto updateCustomer(Long customerId, CustomerDto customerDto){
+    public Customer updateCustomer(Long customerId, Customer customerDto){
 
         log.atInfo().log("updating customer with customer id: {}", customerId);
 

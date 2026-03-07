@@ -1,6 +1,6 @@
 # Account Service
 
-The **Account Service** is a RESTful microservice responsible for managing core banking domain objects. It provides a centralized API layer for creating, reading, updating, and deleting **Accounts**, **Customers**, and **Branches** within the system.
+The **Account Service** is a RESTful microservice responsible for managing account service related objects. It provides a centralized API layer for creating, reading, updating, and deleting **Accounts**, **Customers**, and **Branches** within the system.
 
 ## Features
 
@@ -10,7 +10,7 @@ The **Account Service** is a RESTful microservice responsible for managing core 
 
 ## Tech Stack
 
-- **Language:** Java 17+
+- **Language:** Java 21
 - **Framework:** Spring Boot
 - **Database:** PostgreSQL
 - **Containerization:** Docker / Docker Compose

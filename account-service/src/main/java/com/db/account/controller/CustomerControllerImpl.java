@@ -1,8 +1,8 @@
 package com.db.account.controller;
 
-import com.db.account.model.AccountDto;
 import com.db.account.service.CustomerService;
-import com.db.account.model.CustomerDto;
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,31 +18,31 @@ public class CustomerControllerImpl implements CustomerControllerSpec {
     private final CustomerService customerService;
 
     @Override
-    public ResponseEntity<CustomerDto> createCustomer(CustomerDto customerDto){
+    public ResponseEntity<Customer> createCustomer(Customer customerDto){
         return new ResponseEntity<>(
                 customerService.createCustomer(customerDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<CustomerDto> getCustomerByCustomerId(Long customerId){
+    public ResponseEntity<Customer> getCustomerByCustomerId(Long customerId){
         return new ResponseEntity<>(
                 customerService.getCustomerByCustomerId(customerId), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<CustomerDto>> getAllCustomers(){
+    public ResponseEntity<List<Customer>> getAllCustomers(){
         return new ResponseEntity<>(
                 customerService.getAllCustomers(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<AccountDto>> getAllAccountsForCustomer(Long customerId){
+    public ResponseEntity<List<Account>> getAllAccountsForCustomer(Long customerId){
         return new ResponseEntity<>(
                 customerService.getAllAccountsForCustomer(customerId), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CustomerDto> updateCustomer(Long customerId, CustomerDto customerDto){
+    public ResponseEntity<Customer> updateCustomer(Long customerId, Customer customerDto){
         return new ResponseEntity<>(
                 customerService.updateCustomer(customerId, customerDto), HttpStatus.OK);
     }

@@ -7,10 +7,10 @@ import com.db.account.exceptions.EntityAlreadyDeletedException;
 import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
 import com.db.account.mapper.CycleAvoidingMappingContext;
-import com.db.account.model.AccountDto;
 import com.db.account.repository.AccountRepository;
 import com.db.account.repository.BranchRepository;
 import com.db.account.repository.CustomerRepository;
+import com.digital.backend.model.Account;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
 
 
-    public AccountDto createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto){
+    public Account createAccountForBranchAndCustomer(Long branchCode, Long customerId, Account accountDto){
 
         log.atInfo().log("creating account for customer with id: {} for branch: {}", customerId, branchCode);
 
@@ -53,7 +53,7 @@ public class AccountService {
 
     }
 
-    public List<AccountDto> getAllActiveAccounts() {
+    public List<Account> getAllActiveAccounts() {
 
         log.atInfo().log("getting all active accounts");
 
@@ -66,7 +66,7 @@ public class AccountService {
 
     }
 
-    public AccountDto getAccountByAccountNumber(Long accountNumber){
+    public Account getAccountByAccountNumber(Long accountNumber){
 
         log.atInfo().log("getting account by account number: {}", accountNumber);
 
@@ -81,7 +81,7 @@ public class AccountService {
     }
 
 
-    public AccountDto updateAccount(Long accountNumber, AccountDto accountDto){
+    public Account updateAccount(Long accountNumber, Account accountDto){
 
         log.atInfo().log("updating account by account number: {}", accountNumber);
 

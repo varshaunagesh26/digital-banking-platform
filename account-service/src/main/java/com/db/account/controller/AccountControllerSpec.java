@@ -1,6 +1,6 @@
 package com.db.account.controller;
 
-import com.db.account.model.AccountDto;
+import com.digital.backend.model.Account;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,9 +26,9 @@ public interface AccountControllerSpec {
             content = @Content(schema = @Schema(implementation = AccountControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<AccountDto> createAccountForBranchAndCustomer(
+    ResponseEntity<Account> createAccountForBranchAndCustomer(
             @RequestParam Long branchCode, @RequestParam Long customerId,
-            @Validated @RequestBody AccountDto accountDto);
+            @Validated @RequestBody Account accountDto);
 
 
     @GetMapping(path = "/api/v1/accounts/{accountNumber}",
@@ -41,7 +41,7 @@ public interface AccountControllerSpec {
             content = @Content(schema = @Schema(implementation = AccountControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<AccountDto> getAccountByAccountNumber(
+    ResponseEntity<Account> getAccountByAccountNumber(
             @PathVariable Long accountNumber);
 
 
@@ -55,7 +55,7 @@ public interface AccountControllerSpec {
             content = @Content(schema = @Schema(implementation = AccountControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<List<AccountDto>> getActiveAccounts();
+    ResponseEntity<List<Account>> getActiveAccounts();
 
 
     @PatchMapping(path = "/api/v1/accounts/{accountNumber}",
@@ -69,10 +69,10 @@ public interface AccountControllerSpec {
             content = @Content(schema = @Schema(implementation = AccountControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<AccountDto> updateAccount(
+    ResponseEntity<Account> updateAccount(
             @Parameter(description = "Account number", required = true)
             @PathVariable Long accountNumber,
-            @RequestBody AccountDto accountDto);
+            @RequestBody Account accountDto);
 
     @DeleteMapping("/api/v1/accounts/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
@@ -83,6 +83,6 @@ public interface AccountControllerSpec {
             content = @Content(schema = @Schema(implementation = AccountControllerImpl.class))
     )
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    ResponseEntity<AccountDto> deleteAccount(
+    ResponseEntity<Account> deleteAccount(
             @PathVariable Long accountNumber);
 }

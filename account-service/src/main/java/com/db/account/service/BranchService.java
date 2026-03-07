@@ -3,12 +3,12 @@ package com.db.account.service;
 import com.db.account.exceptions.EntityAlreadyDeletedException;
 import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
-import com.db.account.model.AccountDto;
+import com.digital.backend.model.Account;
+import com.digital.backend.model.Branch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.db.account.entity.BranchEntity;
-import com.db.account.model.BranchDto;
 import com.db.account.repository.BranchRepository;
 import com.db.account.mapper.BranchMapper;
 import com.db.account.mapper.CycleAvoidingMappingContext;
@@ -16,7 +16,6 @@ import com.db.account.mapper.CycleAvoidingMappingContext;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -30,7 +29,7 @@ public class BranchService {
 
     private final AccountMapper accountMapper;
 
-    public BranchDto createBranch(BranchDto branchDto){
+    public Branch createBranch(Branch branchDto){
 
         log.atInfo().log("creating a new branch");
 
@@ -39,7 +38,7 @@ public class BranchService {
     }
 
 
-    public BranchDto getBranchByBranchCode(Long branchCode) {
+    public Branch getBranchByBranchCode(Long branchCode) {
 
         log.atInfo().log("getting branch by branch code: {}", branchCode);
 
@@ -53,7 +52,7 @@ public class BranchService {
         return branchMapper.toDto(branch.get(), new CycleAvoidingMappingContext());
     }
 
-    public List<AccountDto> getAllAccountsForABranch(Long branchCode){
+    public List<Account> getAllAccountsForABranch(Long branchCode){
 
         log.atInfo().log("getting all accounts for a branch with branch code: {}", branchCode);
 
@@ -67,7 +66,7 @@ public class BranchService {
                 .orElseThrow(() -> new EntityNotFoundException("Branch with the given Id not found:{} " + branchCode));
     }
 
-    public List<BranchDto> getAllBranches(){
+    public List<Branch> getAllBranches(){
 
         log.atInfo().log("getting all branches");
 
@@ -79,7 +78,7 @@ public class BranchService {
                 .toList();
     }
 
-    public BranchDto updateBranch(Long branchCode, BranchDto branchDto){
+    public Branch updateBranch(Long branchCode, Branch branchDto){
 
         log.atInfo().log("updating branch with branch code: {}", branchCode);
 

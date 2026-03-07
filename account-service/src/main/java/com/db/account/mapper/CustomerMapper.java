@@ -2,7 +2,7 @@ package com.db.account.mapper;
 
 import com.db.account.entity.AccountEntity;
 import com.db.account.entity.CustomerEntity;
-import com.db.account.model.CustomerDto;
+import com.digital.backend.model.Customer;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -26,10 +26,10 @@ public interface CustomerMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "isActive", ignore = true)
-    CustomerEntity toEntity(CustomerDto customerDto, @Context CycleAvoidingMappingContext mappingContext);
+    CustomerEntity toEntity(Customer customerDto, @Context CycleAvoidingMappingContext mappingContext);
 
     @Mapping(target = "accountNumbers", expression = "java(extractAccountNumber(customerEntity.getCustomerAccounts()))")
-    CustomerDto toDto(CustomerEntity customerEntity, @Context CycleAvoidingMappingContext mappingContext);
+    Customer toDto(CustomerEntity customerEntity, @Context CycleAvoidingMappingContext mappingContext);
 
     default List<Long> extractAccountNumber(List<AccountEntity> accounts) {
         if (accounts == null || accounts.isEmpty()) {
@@ -48,5 +48,5 @@ public interface CustomerMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Named("updateFromDtoPartially")
     void updateFromDtoPartially(
-            CustomerDto customerDto, @MappingTarget CustomerEntity customerEntity);
+            Customer customerDto, @MappingTarget CustomerEntity customerEntity);
 }

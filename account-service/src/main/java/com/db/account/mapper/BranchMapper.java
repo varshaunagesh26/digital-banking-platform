@@ -2,7 +2,7 @@ package com.db.account.mapper;
 
 import com.db.account.entity.AccountEntity;
 import com.db.account.entity.BranchEntity;
-import com.db.account.model.BranchDto;
+import com.digital.backend.model.Branch;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -26,10 +26,10 @@ public interface BranchMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "isActive", ignore = true)
-    BranchEntity toEntity(BranchDto branchDto, @Context CycleAvoidingMappingContext context);
+    BranchEntity toEntity(Branch branchDto, @Context CycleAvoidingMappingContext context);
 
     @Mapping(target = "accountNumbers", expression = "java(extractAccountNumber(branchEntity.getAccountEntities()))")
-    BranchDto toDto(BranchEntity branchEntity, @Context CycleAvoidingMappingContext context);
+    Branch toDto(BranchEntity branchEntity, @Context CycleAvoidingMappingContext context);
 
     default List<Long> extractAccountNumber(List<AccountEntity> accounts) {
         if (accounts == null || accounts.isEmpty()) {
@@ -49,5 +49,5 @@ public interface BranchMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Named("updateFromDtoPartially")
     void updateFromDtoPartially(
-            BranchDto branchDto, @MappingTarget BranchEntity branchEntity);
+            Branch branchDto, @MappingTarget BranchEntity branchEntity);
 }

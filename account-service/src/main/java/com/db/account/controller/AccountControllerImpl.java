@@ -1,10 +1,9 @@
 package com.db.account.controller;
 
-import com.db.account.model.AccountDto;
-
 import java.util.List;
 
 import com.db.account.service.AccountService;
+import com.digital.backend.model.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +16,25 @@ public class AccountControllerImpl implements AccountControllerSpec {
     private final AccountService accountService;
 
     @Override
-    public ResponseEntity<AccountDto> createAccountForBranchAndCustomer(Long branchCode, Long customerId, AccountDto accountDto){
+    public ResponseEntity<Account> createAccountForBranchAndCustomer(Long branchCode, Long customerId, Account accountDto){
         return new ResponseEntity<>(
                 accountService.createAccountForBranchAndCustomer(branchCode, customerId, accountDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<AccountDto> getAccountByAccountNumber(Long accountNumber){
+    public ResponseEntity<Account> getAccountByAccountNumber(Long accountNumber){
         return new ResponseEntity<>(
                 accountService.getAccountByAccountNumber(accountNumber), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<AccountDto>> getActiveAccounts() {
+    public ResponseEntity<List<Account>> getActiveAccounts() {
         return new ResponseEntity<>(
                 accountService.getAllActiveAccounts(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<AccountDto> updateAccount(Long accountNumber, AccountDto accountDto){
+    public ResponseEntity<Account> updateAccount(Long accountNumber, Account accountDto){
         return new ResponseEntity<>(
                 accountService.updateAccount(accountNumber, accountDto), HttpStatus.OK);
     }

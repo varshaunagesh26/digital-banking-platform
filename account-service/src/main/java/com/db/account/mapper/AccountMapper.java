@@ -1,7 +1,7 @@
 package com.db.account.mapper;
 
 import com.db.account.entity.AccountEntity;
-import com.db.account.model.AccountDto;
+import com.digital.backend.model.Account;
 import org.mapstruct.*;
 
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
@@ -22,10 +22,10 @@ public interface AccountMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "isActive", ignore = true)
-    AccountEntity toEntity(AccountDto accountDto, @Context CycleAvoidingMappingContext context);
+    AccountEntity toEntity(Account accountDto, @Context CycleAvoidingMappingContext context);
 
     @Named("toDto")
-    AccountDto toDto(AccountEntity accountEntity, @Context CycleAvoidingMappingContext context);
+    Account toDto(AccountEntity accountEntity, @Context CycleAvoidingMappingContext context);
 
 
     @Mapping(target = "id", ignore = true)
@@ -36,5 +36,5 @@ public interface AccountMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Named("updateFromDtoPartially")
     void updateFromDtoPartially(
-            AccountDto accountDto, @MappingTarget AccountEntity accountEntity);
+            Account accountDto, @MappingTarget AccountEntity accountEntity);
 }
