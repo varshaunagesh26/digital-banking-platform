@@ -1,6 +1,10 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: account-service
+
 
   flyway:
     enabled: true
@@ -9,7 +13,7 @@ spring:
     locations: classpath:db/migrations
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?schemas=account?serverTimezone=Asia/Calcutta
+    url: jdbc:postgresql://localhost:5432/postgres?schemas=account&serverTimezone=Asia/Calcutta
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -22,6 +26,7 @@ spring:
       org:
         flywaydb: DEBUG
 
+
 springdoc:
   api-docs:
     enabled: true
@@ -31,3 +36,11 @@ springdoc:
     path: /swagger-ui.html
     doc-expansion: none
     model-and-view-allowed: true
+
+  config:
+    import:
+      - classpath:kafka.yml
+logging:
+  level:
+    org.springframework.kafka: INFO
+    com.db.account: DEBUG

@@ -1,4 +1,4 @@
-package com.db.account.exceptions;
+package com.digital.backend.exceptions;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -19,8 +19,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.StreamSupport;
-
-import static java.util.stream.Collectors.toList;
 
 @ControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
