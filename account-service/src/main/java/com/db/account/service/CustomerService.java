@@ -1,9 +1,9 @@
 package com.db.account.service;
 
-import com.db.account.exceptions.EntityAlreadyDeletedException;
-import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
 import com.db.account.mapper.CycleAvoidingMappingContext;
+import com.digital.backend.exceptions.EntityAlreadyDeletedException;
+import com.digital.backend.exceptions.EntityNotFoundException;
 import com.digital.backend.model.Account;
 import com.digital.backend.model.Customer;
 import jakarta.transaction.Transactional;
@@ -29,7 +29,7 @@ public class CustomerService {
 
     private final AccountMapper accountMapper;
 
-    public Customer createCustomer(Customer customerDto){
+    public Customer createCustomer(Customer customerDto) {
 
         log.atInfo().log("creating a customer");
 
@@ -38,7 +38,7 @@ public class CustomerService {
         return customerMapper.toDto(newCustomer, new CycleAvoidingMappingContext());
     }
 
-    public Customer getCustomerByCustomerId(Long customerId){
+    public Customer getCustomerByCustomerId(Long customerId) {
 
         log.atInfo().log("getting customer by customer id: {}", customerId);
 
@@ -53,7 +53,7 @@ public class CustomerService {
         return customerMapper.toDto(customer.get(), new CycleAvoidingMappingContext());
     }
 
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
 
         log.atInfo().log("getting all customers");
 
@@ -64,7 +64,7 @@ public class CustomerService {
                 .toList();
     }
 
-    public List<Account> getAllAccountsForCustomer(Long customerId){
+    public List<Account> getAllAccountsForCustomer(Long customerId) {
 
         log.atInfo().log("getting account for customer id: {}", customerId);
 
@@ -80,7 +80,7 @@ public class CustomerService {
 
     }
 
-    public Customer updateCustomer(Long customerId, Customer customerDto){
+    public Customer updateCustomer(Long customerId, Customer customerDto) {
 
         log.atInfo().log("updating customer with customer id: {}", customerId);
 
@@ -91,7 +91,7 @@ public class CustomerService {
         return customerMapper.toDto(existingCustomer, new CycleAvoidingMappingContext());
     }
 
-    public void deleteCustomer(Long customerId){
+    public void deleteCustomer(Long customerId) {
 
         log.atInfo().log("deleting customer with customer id: {}", customerId);
 

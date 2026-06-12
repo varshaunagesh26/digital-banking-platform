@@ -1,0 +1,2 @@
+ALTER TABLE transaction.transaction
+ADD CONSTRAINT uc_transaction_transaction_number UNIQUE (transaction_number);

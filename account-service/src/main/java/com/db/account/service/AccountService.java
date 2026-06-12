@@ -3,13 +3,13 @@ package com.db.account.service;
 import com.db.account.entity.AccountEntity;
 import com.db.account.entity.BranchEntity;
 import com.db.account.entity.CustomerEntity;
-import com.db.account.exceptions.EntityAlreadyDeletedException;
-import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
 import com.db.account.mapper.CycleAvoidingMappingContext;
 import com.db.account.repository.AccountRepository;
 import com.db.account.repository.BranchRepository;
 import com.db.account.repository.CustomerRepository;
+import com.digital.backend.exceptions.EntityAlreadyDeletedException;
+import com.digital.backend.exceptions.EntityNotFoundException;
 import com.digital.backend.model.Account;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional

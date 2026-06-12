@@ -1,4 +1,4 @@
-package com.db.account.exceptions;
+package com.digital.backend.exceptions;
 
 
 import org.springframework.http.HttpStatus;

@@ -1,16 +1,15 @@
-package com.db.account.exceptions;
+package com.digital.backend.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.HttpStatus;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter

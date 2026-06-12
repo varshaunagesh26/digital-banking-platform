@@ -1,8 +1,8 @@
 package com.db.account.service;
 
-import com.db.account.exceptions.EntityAlreadyDeletedException;
-import com.db.account.exceptions.EntityNotFoundException;
 import com.db.account.mapper.AccountMapper;
+import com.digital.backend.exceptions.EntityAlreadyDeletedException;
+import com.digital.backend.exceptions.EntityNotFoundException;
 import com.digital.backend.model.Account;
 import com.digital.backend.model.Branch;
 import lombok.RequiredArgsConstructor;
