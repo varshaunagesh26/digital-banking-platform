@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <springProfile name="!local">
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/var/log/account/data-api.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/var/log/account/data-api.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+    <springProfile name="local">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    </springProfile>
+</configuration>

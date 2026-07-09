@@ -1,0 +1,65 @@
+# docker-compose-kafka.yml
+
+services:
+
+  # ===== Zookeeper =====
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  # ===== Kafka Broker =====
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  # ===== Dedicated Postgres for Conduktor (port 5433 to avoid conflict with app postgres on 5432) =====
+  conduktor-postgres:
+    image: postgres:16-alpine
+    container_name: conduktor-postgres
+    restart: always
+    ports:
+      - "5433:5432"         # ← host 5433, container still uses 5432 internally
+    environment:
+      POSTGRES_DB: conduktor
+      POSTGRES_USER: conduktor
+      POSTGRES_PASSWORD: conduktor
+    volumes:
+      - conduktor_pg_data:/var/lib/postgresql/data
+
+  # ===== Conduktor Console (port 7072) =====
+  conduktor-console:
+    image: conduktor/conduktor-console:1.22.0
+    container_name: conduktor-console
+    restart: always
+    depends_on:
+      - kafka
+      - conduktor-postgres
+    ports:
+      - "7072:8080"         # ← host 7072, container always listens on 8080 internally
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:conduktor@conduktor-postgres:5432/conduktor"
+      CDK_CLUSTERS_0_ID: "local"
+      CDK_CLUSTERS_0_NAME: "local-kafka"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:29092"
+      CDK_AUTH_LOCAL_USERS_0_EMAIL: "admin@conduktor.io"
+      CDK_AUTH_LOCAL_USERS_0_PASSWORD: "admin"
+
+volumes:
+  conduktor_pg_data:
