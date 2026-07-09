@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: transaction-service
@@ -17,6 +20,7 @@ spring:
     password: admin
     baseline-on-migrate: true
     baseline-version: 0
+    repair-on-migrate: true
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=transaction&serverTimezone=Asia/Calcutta

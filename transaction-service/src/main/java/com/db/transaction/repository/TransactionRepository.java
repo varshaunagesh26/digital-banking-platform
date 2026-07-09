@@ -16,4 +16,6 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity,L
     List<TransactionEntity> findTransactionByStatus(TransactionStatus status);
 
     List<TransactionEntity> findByStatusIn(List<TransactionStatus> status);
+
+    boolean existsByReferenceNumber(String referenceNumber);
 }

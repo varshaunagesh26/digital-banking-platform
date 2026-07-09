@@ -62,7 +62,6 @@ public class TransactionEntity {
     @PrePersist
     private void prePersist() {
         UUID uuid = UUID.randomUUID();
-        this.referenceNumber = uuid.toString();
         this.transactionNumber = uuid.toString();
     }
 }

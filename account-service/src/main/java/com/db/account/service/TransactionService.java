@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -39,16 +40,12 @@ public class TransactionService {
 
             if (eventHistory.getStatus() == TransactionStatus.COMPLETED) {
                 log.info("Amount was already credited");
-                log.info("Publishing response for transaction: {}, status: {}",
-                        transactionEvent.getTransactionNumber(), transactionEvent.getStatus());
-                transactionPublisher.publishResponseEvent(transactionEvent);
+                publishResponseEvent(transactionEvent);
                 return;
             }
         }
         performDeposit(transactionEvent);
-        log.info("Publishing response for transaction: {}, status: {}",
-                transactionEvent.getTransactionNumber(), transactionEvent.getStatus());
-        transactionPublisher.publishResponseEvent(transactionEvent);
+        publishResponseEvent(transactionEvent);
 
     }
 
@@ -63,16 +60,12 @@ public class TransactionService {
 
             if (eventHistory.getStatus() == TransactionStatus.COMPLETED) {
                 log.info("Amount was already debited");
-                log.info("Publishing response for transaction: {}, status: {}",
-                        transactionEvent.getTransactionNumber(), transactionEvent.getStatus());
-                transactionPublisher.publishResponseEvent(transactionEvent);
+                publishResponseEvent(transactionEvent);
                 return;
             }
         }
         performWithdrawal(transactionEvent);
-        log.info("Publishing response for transaction: {}, status: {}",
-                transactionEvent.getTransactionNumber(), transactionEvent.getStatus());
-        transactionPublisher.publishResponseEvent(transactionEvent);
+        publishResponseEvent(transactionEvent);
     }
 
     public void processTransfer(TransactionEvent transactionEvent) {
@@ -87,13 +80,19 @@ public class TransactionService {
 
             if (eventHistory.getStatus() == TransactionStatus.COMPLETED) {
                 log.info("Transfer was already performed");
-                transactionPublisher.publishResponseEvent(transactionEvent);
+                publishResponseEvent(transactionEvent);
                 return;
             }
         }
         performTransfer(transactionEvent);
-        transactionPublisher.publishResponseEvent(transactionEvent);
+        publishResponseEvent(transactionEvent);
 
+    }
+
+    private void publishResponseEvent(TransactionEvent transactionEvent) {
+        log.info("Publishing response for transaction: {}, status: {}",
+                transactionEvent.getTransactionNumber(), transactionEvent.getStatus());
+        transactionPublisher.publishResponseEvent(transactionEvent);
     }
 
     private void performDeposit(TransactionEvent transactionEvent) {
@@ -104,18 +103,10 @@ public class TransactionService {
         AccountEntity account = accountRepository.findAccountByAccountNumber(accountNumber)
                 .orElseThrow(() -> new RuntimeException("Account not found: " + accountNumber));
 
-        if(Boolean.FALSE.equals(account.getIsActive())){
+        if (Boolean.FALSE.equals(account.getIsActive())) {
             log.info("Account {} has been deactivated", accountNumber);
-
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
-
-            EventHistory eventHistory = new EventHistory();
-
-            eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-            eventHistory.setType(TransactionType.DEPOSIT);
-            eventHistory.setEventStatus(EventStatus.RESPONSE);
-            eventHistory.setStatus(TransactionStatus.FAILED);
-            eventHistoryRepository.save(eventHistory);
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
         }
 
@@ -124,21 +115,13 @@ public class TransactionService {
         account.setAccountBalance(newBalance);
         accountRepository.save(account);
 
-        EventHistory eventHistory = new EventHistory();
-
-        eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-        eventHistory.setType(TransactionType.DEPOSIT);
-        eventHistory.setEventStatus(EventStatus.RESPONSE);
-        eventHistory.setStatus(TransactionStatus.COMPLETED);
-
-        transactionEvent.setStatus(String.valueOf(TransactionStatus.COMPLETED));
-
-
-        eventHistoryRepository.save(eventHistory);
+        updateEventHistory(transactionEvent, TransactionStatus.COMPLETED);
 
         log.info("Amount {} has been credited to the account {}", newBalance, accountNumber);
-        return;
+        transactionEvent.setStatus(String.valueOf(TransactionStatus.COMPLETED));
+
     }
+
 
     private void performWithdrawal(TransactionEvent transactionEvent) {
 
@@ -148,18 +131,11 @@ public class TransactionService {
         AccountEntity account = accountRepository.findAccountByAccountNumber(accountNumber)
                 .orElseThrow(() -> new RuntimeException("Account not found: " + accountNumber));
 
-        if(Boolean.FALSE.equals(account.getIsActive())){
+        if (Boolean.FALSE.equals(account.getIsActive())) {
             log.error("Account {} has been deactivated", accountNumber);
 
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
-
-            EventHistory eventHistory = new EventHistory();
-
-            eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-            eventHistory.setType(TransactionType.WITHDRAW);
-            eventHistory.setEventStatus(EventStatus.RESPONSE);
-            eventHistory.setStatus(TransactionStatus.FAILED);
-            eventHistoryRepository.save(eventHistory);
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
         }
 
@@ -168,29 +144,18 @@ public class TransactionService {
         if (account.getAccountBalance() < amount) {
             log.info("Balance insufficient. Withdrawal can't be performed");
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
-            EventHistory eventHistory = new EventHistory();
-            eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-            eventHistory.setType(TransactionType.WITHDRAW);
-            eventHistory.setEventStatus(EventStatus.RESPONSE);
-            eventHistory.setStatus(TransactionStatus.FAILED);
-            eventHistoryRepository.save(eventHistory);
-            return;
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+
+        } else {
+            account.setAccountBalance(account.getAccountBalance() - amount);
+            accountRepository.save(account);
+
+            updateEventHistory(transactionEvent, TransactionStatus.COMPLETED);
+
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.COMPLETED));
+
+            log.info("Amount {} has been debited from the account {}", amount, accountNumber);
         }
-        account.setAccountBalance(account.getAccountBalance() - amount);
-        accountRepository.save(account);
-
-        EventHistory eventHistory = new EventHistory();
-
-        eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-        eventHistory.setType(TransactionType.WITHDRAW);
-        eventHistory.setEventStatus(EventStatus.RESPONSE);
-        eventHistory.setStatus(TransactionStatus.COMPLETED);
-
-        transactionEvent.setStatus(String.valueOf(TransactionStatus.COMPLETED));
-
-        eventHistoryRepository.save(eventHistory);
-
-        log.info("Amount {} has been debited from the account {}", amount, accountNumber);
     }
 
     private void performTransfer(TransactionEvent transactionEvent) {
@@ -202,36 +167,18 @@ public class TransactionService {
         AccountEntity senderAccount = accountRepository.findAccountByAccountNumber(senderAccountNumber)
                 .orElseThrow(() -> new RuntimeException("Sender account not found: " + senderAccountNumber));
 
-        if(Boolean.FALSE.equals(senderAccount.getIsActive())){
-            log.error("Sender account {} has been deactivated", senderAccountNumber);
-            transactionEvent.setStatus(String.valueOf(TransactionStatus.CANCELLED));
-
-            EventHistory eventHistory = new EventHistory();
-
-            eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-            eventHistory.setType(TransactionType.TRANSFER);
-            eventHistory.setEventStatus(EventStatus.RESPONSE);
-            eventHistory.setStatus(TransactionStatus.FAILED);
-            eventHistoryRepository.save(eventHistory);
-
-            return;
-        }
 
         AccountEntity receiverAccount = accountRepository.findAccountByAccountNumber(receiverAccountNumber)
                 .orElseThrow(() -> new RuntimeException("Receiver account not found: " + receiverAccountNumber));
 
-        if(Boolean.FALSE.equals(receiverAccount.getIsActive())){
-            log.error("Sender account {} has been deactivated", senderAccountNumber);
-            transactionEvent.setStatus(String.valueOf(TransactionStatus.CANCELLED));
 
-            EventHistory eventHistory = new EventHistory();
+        if (Boolean.FALSE.equals(senderAccount.getIsActive()) || Boolean.FALSE.equals(receiverAccount.getIsActive())) {
+            log.error("The Sender account {} activation status is: {}", senderAccountNumber, senderAccount.getIsActive());
+            log.error("The Receiver account {} activation status is: {}", receiverAccountNumber, receiverAccount.getIsActive());
 
-            eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-            eventHistory.setType(TransactionType.TRANSFER);
-            eventHistory.setEventStatus(EventStatus.RESPONSE);
-            eventHistory.setStatus(TransactionStatus.FAILED);
-            eventHistoryRepository.save(eventHistory);
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
 
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
         }
 
@@ -246,18 +193,31 @@ public class TransactionService {
         accountRepository.save(senderAccount);
         accountRepository.save(receiverAccount);
 
-        EventHistory eventHistory = new EventHistory();
-
-        eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
-        eventHistory.setType(TransactionType.TRANSFER);
-        eventHistory.setEventStatus(EventStatus.RESPONSE);
-        eventHistory.setStatus(TransactionStatus.COMPLETED);
-
+        updateEventHistory(transactionEvent, TransactionStatus.COMPLETED);
         transactionEvent.setStatus(String.valueOf(TransactionStatus.COMPLETED));
 
-        eventHistoryRepository.save(eventHistory);
-
         log.info("Amount {} has been sent from {} to {}", amount, senderAccountNumber, receiverAccountNumber);
+    }
+
+
+    public void setEventHistory(TransactionEvent transactionEvent, TransactionType transactionType, TransactionStatus transactionStatus) throws SQLIntegrityConstraintViolationException {
+        EventHistory eventHistory = new EventHistory();
+        eventHistory.setTransactionNumber(transactionEvent.getTransactionNumber());
+        eventHistory.setType(transactionType);
+        eventHistory.setEventStatus(EventStatus.RESPONSE);
+        eventHistory.setStatus(transactionStatus);
+        eventHistoryRepository.save(eventHistory);
+    }
+
+    private void updateEventHistory(TransactionEvent transactionEvent, TransactionStatus transactionStatus) {
+        String transactionNumber = transactionEvent.getTransactionNumber();
+        Optional<EventHistory> eventHistoryByTransactionNumber = eventHistoryRepository.findEventHistoryByTransactionNumber(transactionNumber);
+        if (eventHistoryByTransactionNumber.isPresent()) {
+            EventHistory eventHistory = eventHistoryByTransactionNumber.get();
+            eventHistory.setStatus(transactionStatus);
+            eventHistoryRepository.save(eventHistory);
+        }
+
     }
 
 }

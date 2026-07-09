@@ -9,8 +9,10 @@ import com.digital.backend.events.TransactionEvent;
 import com.digital.backend.model.Transaction;
 import com.digital.backend.model.TransactionInput;
 import com.digital.backend.model.enums.Currency;
+import com.digital.backend.model.enums.PaymentType;
 import com.digital.backend.model.enums.TransactionStatus;
 import com.digital.backend.model.enums.TransactionType;
+import com.digital.backend.model.paymentservice.PaymentEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -208,4 +210,37 @@ public class TransactionService {
         }
     }
 
+    public void processPaymentEvent(PaymentEvent event) {
+        if (transactionRepository.existsByReferenceNumber(event.getPaymentId())) {
+            log.warn("Duplicate payment event received for paymentId: {}", event.getPaymentId());
+            return;
+        }
+
+        TransactionEntity transaction = TransactionEntity.builder()
+                .fromAccountNumber(event.getFromAccountNumber() != null
+                        ? Long.parseLong(event.getFromAccountNumber()) : null)
+                .toAccountNumber(event.getToAccountNumber() != null
+                        ? Long.parseLong(event.getToAccountNumber()) : null)
+                .amount(event.getAmount())
+                .currency(Currency.INR)
+                .type(mapToTransactionType(event.getPaymentType()))
+                .status(TransactionStatus.OPENED)
+                .createdBy("payment-service")
+                .timestamp(Instant.now())
+                .referenceNumber(event.getPaymentId())
+                .build();
+
+        transactionRepository.save(transaction);
+        log.info("Transaction created for paymentId: {}", event.getPaymentId());
+    }
+
+    private TransactionType mapToTransactionType(PaymentType paymentType) {
+        if (paymentType == null)
+            return TransactionType.TRANSFER;
+        return switch (paymentType) {
+            case DEBIT    -> TransactionType.WITHDRAW;
+            case CREDIT   -> TransactionType.DEPOSIT;
+            case TRANSFER -> TransactionType.TRANSFER;
+        };
+    }
 }

@@ -1,14 +1,14 @@
 INSERT INTO account.customer (customer_id, first_name, last_name, customer_dob, phone, customer_email, customer_address, is_active)
-VALUES (7111, 'Arjun', 'Sharma', '1985-03-15', 9876543210, 'arjun.sharma@gmail.com', '12 MG Road, Bengaluru', true);
+VALUES (7136, 'Arjun', 'Sharma', '1985-03-15', 9876543210, 'arjun.sharma@gmail.com', '12 MG Road, Bengaluru', true);
 
 INSERT INTO account.customer (customer_id, first_name, last_name, customer_dob, phone, customer_email, customer_address, is_active)
-VALUES (7112, 'Priya', 'Nair', '1992-07-22', 8765432109, 'priya.nair@gmail.com', '45 Anna Salai, Chennai', true);
+VALUES (7137, 'Priya', 'Nair', '1992-07-22', 8765432109, 'priya.nair@gmail.com', '45 Anna Salai, Chennai', true);
 
 INSERT INTO account.customer (customer_id, first_name, last_name, customer_dob, phone, customer_email, customer_address, is_active)
-VALUES (7113, 'Rahul', 'Verma', '1988-11-05', 9123456789, 'rahul.verma@yahoo.com', '78 Park Street, Kolkata', true);
+VALUES (7138, 'Rahul', 'Verma', '1988-11-05', 9123456789, 'rahul.verma@yahoo.com', '78 Park Street, Kolkata', true);
 
 INSERT INTO account.customer (customer_id, first_name, last_name, customer_dob, phone, customer_email, customer_address, is_active)
-VALUES (7114, 'Deepa', 'Menon', '1995-01-30', 7890123456, 'deepa.menon@gmail.com', '23 Marine Drive, Mumbai', true);
+VALUES (7139, 'Deepa', 'Menon', '1995-01-30', 7890123456, 'deepa.menon@gmail.com', '23 Marine Drive, Mumbai', true);
 
 INSERT INTO account.customer (customer_id, first_name, last_name, customer_dob, phone, customer_email, customer_address, is_active)
 VALUES (7115, 'Suresh', 'Reddy', '1978-09-12', 9988776655, 'suresh.reddy@outlook.com', '9 Banjara Hills, Hyderabad', true);

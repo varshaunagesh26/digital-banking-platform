@@ -18,7 +18,7 @@ import java.util.List;
 public interface TransactionControllerSpec {
 
 
-    @GetMapping(path = "/api/v1/transactions/{transactionNumber}",
+    @GetMapping(path = "/api/v1/transaction/transaction-number/{transactionNumber}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Return transaction for transactionNumber", tags = "transactions")
@@ -32,7 +32,7 @@ public interface TransactionControllerSpec {
             @PathVariable String transactionNumber);
 
 
-    @GetMapping(path = "/api/v1/transactions/{transactionStatus}",
+    @GetMapping(path = "/api/v1/transactions/transaction-status/{transactionStatus}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Return all transactions for transactionStatus", tags = "transactions")

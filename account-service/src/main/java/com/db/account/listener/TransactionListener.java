@@ -2,6 +2,8 @@ package com.db.account.listener;
 
 import com.db.account.service.TransactionService;
 import com.digital.backend.events.TransactionEvent;
+import com.digital.backend.model.enums.TransactionStatus;
+import com.digital.backend.model.enums.TransactionType;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,15 +13,17 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 
 @RequiredArgsConstructor
 @Slf4j
 @Component
 public class TransactionListener {
 
-    private final ObjectMapper objectMapper =  new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final TransactionService  transactionService;
+    private final TransactionService transactionService;
 
     @PostConstruct
     public void init() {
@@ -38,7 +42,7 @@ public class TransactionListener {
 
             log.info("Successfully deserialized event with txn id {}, amount: {} ", event.getTransactionNumber(), event.getAmount());
 
-            performingDifferentTypeOfTransactions(event);
+            executeTransactions(event);
 
             acknowledgment.acknowledge();
 
@@ -48,23 +52,35 @@ public class TransactionListener {
         }
     }
 
-    private void performingDifferentTypeOfTransactions(TransactionEvent event) {
+    private void executeTransactions(TransactionEvent event){
 
-        if(event.getType() == null){
+        if (event.getType() == null) {
             log.info("Transaction type is null for this event: {}", event.getTransactionNumber());
             return;
         }
 
         log.info("Type of transaction event for this event: {}", event.getType());
+        try {
+
+            transactionService.setEventHistory(event, TransactionType.valueOf(event.getType()), TransactionStatus.INPROGRESS);
+        } catch (SQLIntegrityConstraintViolationException icvEx) {
+            log.warn(" trying to create already existing transaction for processing.. {}", icvEx.getMessage());
+        }
+
+
         switch (event.getType()) {
 
-            case "DEPOSIT" : transactionService.processDeposit(event);
-            break;
-            case "WITHDRAW" : transactionService.processWithdrawal(event);
-            break;
-            case "TRANSFER" : transactionService.processTransfer(event);
-            break;
-            default: log.info("Transaction type is unknown for this event: {}", event.getTransactionNumber());
+            case "DEPOSIT":
+                transactionService.processDeposit(event);
+                break;
+            case "WITHDRAW":
+                transactionService.processWithdrawal(event);
+                break;
+            case "TRANSFER":
+                transactionService.processTransfer(event);
+                break;
+            default:
+                log.info("Transaction type is unknown for this event: {}", event.getTransactionNumber());
         }
     }
 }

@@ -2,6 +2,7 @@ package com.db.transaction.listener;
 
 import com.db.transaction.service.TransactionService;
 import com.digital.backend.events.TransactionEvent;
+import com.digital.backend.model.paymentservice.PaymentEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class TransactionListener {
             ConsumerRecord<String, String> record,
             Acknowledgment acknowledgment) {
         try {
-            log.info("Response received - topic: {}, partition: {}, offset: {}",
+            log.info("Account event response received - topic: {}, partition: {}, offset: {}",
                     record.topic(), record.partition(), record.offset());
 
             TransactionEvent event = objectMapper.readValue(record.value(), TransactionEvent.class);
@@ -38,6 +39,28 @@ public class TransactionListener {
 
         } catch (Exception e) {
             log.error("Error processing transaction response: {}", e.getMessage(), e);
+            acknowledgment.acknowledge();
+        }
+    }
+
+    @KafkaListener(topics = "payment-request-event", groupId = "transaction-consumer-group")
+    public void handlePaymentRequestEvent(
+            ConsumerRecord<String, String> record,
+            Acknowledgment acknowledgment){
+        try{
+            log.info("Payment event received- topic: {}, partition: {}, offset: {}",
+                    record.topic(), record.partition(), record.offset());
+
+            PaymentEvent event = objectMapper.readValue(record.value(), PaymentEvent.class);
+
+            log.info("Processing payment event for paymentId: {}", event.getPaymentId());
+
+            transactionService.processPaymentEvent(event);
+
+            acknowledgment.acknowledge();
+
+        } catch (Exception e) {
+            log.error("Error processing payment event: {}", e.getMessage(), e);
             acknowledgment.acknowledge();
         }
     }

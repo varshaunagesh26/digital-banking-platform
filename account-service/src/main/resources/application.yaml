@@ -11,6 +11,7 @@ spring:
     check-location: true
     schemas: account
     locations: classpath:db/migrations
+    repair-on-migrate: true
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?schemas=account&serverTimezone=Asia/Calcutta
