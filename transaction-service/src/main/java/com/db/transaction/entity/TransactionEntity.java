@@ -29,8 +29,14 @@ public class TransactionEntity {
     @Column(name = "from_account_number")
     private Long fromAccountNumber;
 
+    @Column(name = "from_ifsc_code")
+    private String fromIFSCCode;
+
     @Column(name = "to_account_number")
     private Long toAccountNumber;
+
+    @Column(name = "to_ifsc_code")
+    private String toIFSCCode;
 
     @Column(name = "amount")
     private Double amount;

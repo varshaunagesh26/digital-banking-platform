@@ -21,7 +21,7 @@ public class TransactionScheduler {
     private final TransactionService transactionService;
 
 
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void processTransaction(){
 
         log.info("Scheduler triggered at {}", LocalDateTime.now());
