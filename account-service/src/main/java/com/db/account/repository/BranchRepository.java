@@ -13,5 +13,7 @@ public interface BranchRepository extends JpaRepository<BranchEntity, Long> {
 
     List<BranchEntity> findAllByIsActiveTrue();
 
+    Optional<BranchEntity> findByBranchIFSC(String branchIFSC);
+
 }
 

@@ -10,7 +10,9 @@ import lombok.*;
 public class TransactionEvent {
     private String transactionNumber;
     private String fromAccountNumber;
+    private String fromIFSCCode;
     private String toAccountNumber;
+    private String toIFSCCode;
     private String amount;
     private String currency;
     private String type;

@@ -2,6 +2,7 @@ package com.db.account.service;
 
 import com.db.account.entity.AccountEntity;
 import com.db.account.entity.EventHistory;
+import com.db.account.repository.BranchRepository;
 import com.db.account.response.publisher.TransactionEventResponsePublisher;
 import com.db.account.repository.AccountRepository;
 import com.db.account.repository.EventHistoryRepository;
@@ -28,6 +29,8 @@ public class TransactionService {
     private final TransactionEventResponsePublisher transactionPublisher;
 
     private final EventHistoryRepository eventHistoryRepository;
+
+    private final BranchRepository branchRepository;
 
 
     public void processDeposit(TransactionEvent transactionEvent) {
@@ -98,6 +101,15 @@ public class TransactionService {
     private void performDeposit(TransactionEvent transactionEvent) {
 
         log.info("Performing deposit of account {}", transactionEvent.getFromAccountNumber());
+
+        if (!isBranchValid(transactionEvent.getToIFSCCode())) {
+            log.error("Branch with IFSC {} not found for DEPOSIT, transaction {}",
+                    transactionEvent.getToIFSCCode(), transactionEvent.getTransactionNumber());
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+            return;
+        }
+
         Long accountNumber = Long.parseLong(transactionEvent.getToAccountNumber());
 
         AccountEntity account = accountRepository.findAccountByAccountNumber(accountNumber)
@@ -126,18 +138,27 @@ public class TransactionService {
     private void performWithdrawal(TransactionEvent transactionEvent) {
 
         log.info("Performing withdrawal of account {}", transactionEvent.getFromAccountNumber());
+
+        if (!isBranchValid(transactionEvent.getFromIFSCCode())) {
+            log.error("Branch with IFSC {} not found for WITHDRAWAL, transaction {}",
+                    transactionEvent.getFromIFSCCode(), transactionEvent.getTransactionNumber());
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+            return;
+        }
+
         Long accountNumber = Long.parseLong(transactionEvent.getFromAccountNumber());
 
         AccountEntity account = accountRepository.findAccountByAccountNumber(accountNumber)
                 .orElseThrow(() -> new RuntimeException("Account not found: " + accountNumber));
 
         if (Boolean.FALSE.equals(account.getIsActive())) {
-            log.error("Account {} has been deactivated", accountNumber);
 
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
             updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
-        }
+        }      log.error("Account {} has been deactivated", accountNumber);
+
 
         double amount = Double.parseDouble(transactionEvent.getAmount());
 
@@ -161,6 +182,23 @@ public class TransactionService {
     private void performTransfer(TransactionEvent transactionEvent) {
 
         log.info("Performing transfer from  account {} to account {}", transactionEvent.getFromAccountNumber(), transactionEvent.getToAccountNumber());
+
+        if (!isBranchValid(transactionEvent.getFromIFSCCode())) {
+            log.error("Sender branch with IFSC {} not found for TRANSFER, transaction {}",
+                    transactionEvent.getFromIFSCCode(), transactionEvent.getTransactionNumber());
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+            return;
+        }
+
+        if (!isBranchValid(transactionEvent.getToIFSCCode())) {
+            log.error("Receiver branch with IFSC {} not found for TRANSFER, transaction {}",
+                    transactionEvent.getToIFSCCode(), transactionEvent.getTransactionNumber());
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+            return;
+        }
+
         Long senderAccountNumber = Long.parseLong(transactionEvent.getFromAccountNumber());
         Long receiverAccountNumber = Long.parseLong(transactionEvent.getToAccountNumber());
 
@@ -177,7 +215,6 @@ public class TransactionService {
             log.error("The Receiver account {} activation status is: {}", receiverAccountNumber, receiverAccount.getIsActive());
 
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
-
             updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
         }
@@ -186,6 +223,9 @@ public class TransactionService {
 
         if (senderAccount.getAccountBalance() < amount) {
             log.info("Balance insufficient for transfer to be performed");
+            transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
+            updateEventHistory(transactionEvent, TransactionStatus.FAILED);
+            return;
         }
 
         senderAccount.setAccountBalance(senderAccount.getAccountBalance() - amount);
@@ -218,6 +258,46 @@ public class TransactionService {
             eventHistoryRepository.save(eventHistory);
         }
 
+    }
+
+    private boolean isBranchValid(String ifscCode){
+
+        if (ifscCode == null || ifscCode.isBlank()) {
+            log.info("IFSC code not provided, skipping branch validation");
+            return true;
+        }
+
+        boolean branchExists = branchRepository.findByBranchIFSC(ifscCode).isPresent();
+        if (!branchExists) {
+            log.warn("Branch with IFSC {} not found", ifscCode);
+        }
+        return branchExists;
+    }
+
+    public boolean isAlreadyProcessed(String transactionNumber) {
+        return eventHistoryRepository
+                .findEventHistoryByTransactionNumber(transactionNumber)
+                .map(e -> e.getStatus() == TransactionStatus.COMPLETED
+                        || e.getStatus() == TransactionStatus.FAILED)
+                .orElse(false);
+    }
+
+    public void republishExistingResult(String transactionNumber) {
+        log.info("Republishing existing result for transaction {}", transactionNumber);
+        eventHistoryRepository.findEventHistoryByTransactionNumber(transactionNumber)
+                .ifPresentOrElse(
+                        eventHistory -> {
+                            TransactionEvent responseEvent = new TransactionEvent();
+                            responseEvent.setTransactionNumber(transactionNumber);
+                            responseEvent.setStatus(String.valueOf(eventHistory.getStatus()));
+                            responseEvent.setType(String.valueOf(eventHistory.getType()));
+                            log.info("Republishing existing result for transaction {} with status {}",
+                                    transactionNumber, eventHistory.getStatus());
+                            publishResponseEvent(responseEvent);
+                        },
+                        () -> log.warn("No event history found for transaction {}, cannot republish",
+                                transactionNumber)
+                );
     }
 
 }
