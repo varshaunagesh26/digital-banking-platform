@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,5 +34,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {return new  ObjectMapper();}
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 }

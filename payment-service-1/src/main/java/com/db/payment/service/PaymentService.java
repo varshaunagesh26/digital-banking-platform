@@ -30,12 +30,21 @@ public class PaymentService {
 
     private final NachService nachService;
 
+    private static final String SBI_PREFIX = "SBIN";
+
+
     public Payment createPayment(Payment payment) {
 
-        if(payment.getPaymentAccountInfo().getFromAccountNumber() == null ||
-                payment.getPaymentAccountInfo().getFromIFSCCode() == null) {
+        if(payment.getPaymentAccountInfo() == null
+                || payment.getPaymentAccountInfo().getFromAccountNumber() == null
+                || payment.getPaymentAccountInfo().getFromIFSCCode() == null)  {
             log.error("Payment creation failed: Missing from account details");
             throw new IllegalArgumentException("Missing from account details");
+        }
+
+        if (!isSbiCode(payment.getPaymentAccountInfo().getFromIFSCCode())) {
+            log.error("Payment creation failed: from-IFSC {} does not belong to SBI", payment.getPaymentAccountInfo().getFromIFSCCode());
+            throw new IllegalArgumentException("From account must belong to SBI (IFSC starting with SBIN)");
         }
 
         PaymentEntity paymentEntity = PaymentEntity.builder()
@@ -49,24 +58,22 @@ public class PaymentService {
                 .paymentStatus(PaymentStatus.INITIATED)
                 .build();
 
-        if (paymentEntity.getFromIFSCCode() == null || paymentEntity.getFromIFSCCode().length() < 4) {
-            log.warn("Invalid or missing From-IFSC code provided.");
-            return null;
-        }
-
-        if(!paymentEntity.getFromIFSCCode().substring(0,4).equals("SBIN")){
-            log.info("This account doesn't belong to SBI bank");
-            return null;
-        }
-
         paymentRepository.save(paymentEntity);
 
-        if(!paymentEntity.getToIFSCCode().substring(0,4).equals("SBIN") && paymentEntity.getPaymentType() == PaymentType.TRANSFER){
-            log.info("Inter-bank transfer is detected from {} bank to {} bank", paymentEntity.getFromIFSCCode(),paymentEntity.getToIFSCCode());
-            nachService.performInterBankTransfer(paymentEntity);
+        if (paymentEntity.getPaymentType() == PaymentType.TRANSFER) {
+            validateToAccountInfo(paymentEntity.getToAccountNumber(), paymentEntity.getToIFSCCode());
+
+            if (!isSbiCode(paymentEntity.getToIFSCCode())) {
+                log.info("Inter-bank transfer detected from {} bank to {} bank",
+                        paymentEntity.getFromIFSCCode(), paymentEntity.getToIFSCCode());
+                nachService.performInterBankTransfer(paymentEntity);
+            } else {
+                log.info("Intra-bank (SBI to SBI) transfer for account {}", paymentEntity.getFromAccountNumber());
+            }
         }
 
-        log.info("Performing {} transaction for account {} ",  paymentEntity.getPaymentOperation(), paymentEntity.getFromAccountNumber());
+        log.info("Performing {} transaction for account {} ",
+                paymentEntity.getPaymentOperation(), paymentEntity.getFromAccountNumber());
 
 
         PaymentEvent paymentEvent = mapToEvent(paymentEntity);
@@ -75,6 +82,20 @@ public class PaymentService {
 
         paymentEventPublisher.publishRequestEvent(paymentEvent);
         return paymentMapper.toDto(paymentEntity, new CycleAvoidMappingContext());
+    }
+
+    private boolean isSbiCode(String ifscCode) {
+        return ifscCode != null && ifscCode.length() >= 4 && ifscCode.substring(0, 4).equals(SBI_PREFIX);
+    }
+
+    private void validateToAccountInfo(String toAccountNumber, String toIFSCCode) {
+        if (toAccountNumber == null || toIFSCCode == null) {
+            log.error("Payment creation failed: transfer requires toAccountNumber and toIFSCCode");
+            throw new IllegalArgumentException("toAccountNumber and toIFSCCode are required for a transfer");
+        }
+        if (toIFSCCode.length() < 4) {
+            throw new IllegalArgumentException("toIFSCCode is not a valid IFSC code");
+        }
     }
 
     private PaymentEvent mapToEvent(PaymentEntity paymentEntity){

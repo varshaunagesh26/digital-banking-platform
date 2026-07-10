@@ -21,7 +21,7 @@ public class NachServiceImpl implements NachService{
         paymentEntity.setToAccountNumber(null);
         paymentEntity.setToIFSCCode(null);
 
-        PaymentEvent paymentEvent = PaymentEvent.builder()
+        /**PaymentEvent paymentEvent = PaymentEvent.builder()
                 .paymentId(paymentEntity.getPaymentId())
                 .fromAccountNumber(paymentEntity.getFromAccountNumber())
                 .fromIFSCCode(paymentEntity.getFromIFSCCode())
@@ -34,6 +34,6 @@ public class NachServiceImpl implements NachService{
 
         log.info("Performing inter bank transfer for account {} ", paymentEntity.getFromAccountNumber());
 
-        paymentEventPublisher.publishRequestEvent(paymentEvent);
+         paymentEventPublisher.publishRequestEvent(paymentEvent); */
     }
 }
