@@ -91,6 +91,7 @@ public class TransactionService {
         log.info("Transaction is being created to deposit amount {} to account {}", deposit.getAmount(), deposit.getToAccountNumber());
         TransactionEntity transactionEntity = TransactionEntity.builder()
                         .toAccountNumber(deposit.getToAccountNumber())
+                        .toIFSCCode(deposit.getToIFSCCode())
                         .amount(deposit.getAmount())
                         .status(TransactionStatus.OPENED)
                         .currency(Currency.INR)
@@ -107,6 +108,7 @@ public class TransactionService {
         log.info("Transaction is being created to withdraw amount {} from account {}", withdraw.getAmount(), withdraw.getFromAccountNumber());
         TransactionEntity transactionEntity = TransactionEntity.builder()
                 .fromAccountNumber(withdraw.getFromAccountNumber())
+                .fromIFSCCode(withdraw.getFromIFSCCode())
                 .amount(withdraw.getAmount())
                 .status(TransactionStatus.OPENED)
                 .currency(Currency.INR)
@@ -123,7 +125,9 @@ public class TransactionService {
         log.info("Transaction is being created to transfer amount {} from {} to {}", transfer.getAmount(), transfer.getFromAccountNumber(), transfer.getToAccountNumber());
         TransactionEntity transactionEntity = TransactionEntity.builder()
                 .fromAccountNumber(transfer.getFromAccountNumber())
+                .fromIFSCCode(transfer.getFromIFSCCode())
                 .toAccountNumber(transfer.getToAccountNumber())
+                .toIFSCCode(transfer.getToIFSCCode())
                 .amount(transfer.getAmount())
                 .status(TransactionStatus.OPENED)
                 .currency(Currency.INR)
@@ -168,8 +172,12 @@ public class TransactionService {
                 ? transaction.getTransactionNumber() : null);
         event.setFromAccountNumber(transaction.getFromAccountNumber() != null
                 ? transaction.getFromAccountNumber().toString() : null);
+        event.setFromIFSCCode(transaction.getFromIFSCCode() != null
+                ? transaction.getFromIFSCCode() : null);
         event.setToAccountNumber(transaction.getToAccountNumber() != null
                 ? transaction.getToAccountNumber().toString() : null);
+        event.setToIFSCCode(transaction.getToIFSCCode() != null
+                ? transaction.getToIFSCCode() : null);
         event.setAmount(transaction.getAmount() != null
                 ? transaction.getAmount().toString() : null);
         event.setCurrency(transaction.getCurrency() != null
@@ -221,6 +229,10 @@ public class TransactionService {
                         ? Long.parseLong(event.getFromAccountNumber()) : null)
                 .toAccountNumber(event.getToAccountNumber() != null
                         ? Long.parseLong(event.getToAccountNumber()) : null)
+                .fromIFSCCode(event.getFromIFSCCode() != null
+                        ?  event.getFromIFSCCode() : null)
+                .toIFSCCode(event.getToIFSCCode() != null
+                        ? event.getToIFSCCode() : null)
                 .amount(event.getAmount())
                 .currency(Currency.INR)
                 .type(mapToTransactionType(event.getPaymentType()))
@@ -229,6 +241,11 @@ public class TransactionService {
                 .timestamp(Instant.now())
                 .referenceNumber(event.getPaymentId())
                 .build();
+
+        if(event.getPaymentType() == PaymentType.CREDIT) {
+            transaction.setToAccountNumber(Long.valueOf(event.getFromAccountNumber()));
+            transaction.setToIFSCCode(event.getToIFSCCode());
+        }
 
         transactionRepository.save(transaction);
         log.info("Transaction created for paymentId: {}", event.getPaymentId());

@@ -59,12 +59,20 @@ public class TransactionListener {
             return;
         }
 
+        if (transactionService.isAlreadyProcessed(event.getTransactionNumber())) {
+            log.info("Transaction {} already processed, skipping", event.getTransactionNumber());
+            transactionService.republishExistingResult(event.getTransactionNumber());
+            return;
+        }
+
         log.info("Type of transaction event for this event: {}", event.getType());
         try {
-
             transactionService.setEventHistory(event, TransactionType.valueOf(event.getType()), TransactionStatus.INPROGRESS);
-        } catch (SQLIntegrityConstraintViolationException icvEx) {
-            log.warn(" trying to create already existing transaction for processing.. {}", icvEx.getMessage());
+        } catch (Exception e) {
+            log.warn("Transaction already exists, skipping creation: {}", event.getTransactionNumber());
+            log.info("Attempting to republish result for: {}", event.getTransactionNumber());
+            transactionService.republishExistingResult(event.getTransactionNumber());
+            return;
         }
 
 
