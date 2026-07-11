@@ -1,11 +1,11 @@
 INSERT INTO branch (branch_code, branch_name, branch_address, branch_ifsc, is_active) VALUES
-(001001, 'SBI Jayanagar', 'No. 45, 10th Main, 4th Block, Jayanagar, Bengaluru - 560011', 'SBIN0001001',TRUE),
-(001002, 'HDFC BTM Layout', 'No. 23, 1st Stage, BTM Layout, Bengaluru - 560029', 'HDFC0001002',TRUE),
-(001003, 'ICICI Banashankari', 'No. 12, 2nd Stage, Banashankari, Bengaluru - 560070', 'ICIC0001003',TRUE),
-(001004, 'Canara Bank JP Nagar', 'No. 78, 15th Cross, JP Nagar 2nd Phase, Bengaluru - 560078', 'CNRB0001004',TRUE),
-(001005, 'Axis Bank Basavanagudi', 'No. 56, Gandhi Bazaar Main Road, Basavanagudi, Bengaluru - 560004', 'UTIB0001005',TRUE),
-(001006, 'Bank of Baroda VV Puram',	'No. 34, KR Road, VV Puram, Bengaluru - 560004', 'BARB0VVPURA',TRUE),
-(001007, 'Indian Bank Kumaraswamy Layout',	'No. 89, 2nd Stage, Kumaraswamy Layout, Bengaluru - 560078', 'IDIB0001007',TRUE),
-(001008, 'Punjab National Bank Jayanagar', 'No. 102, 9th Main, 3rd Block, Jayanagar, Bengaluru - 560011', 'PUNB0101008',TRUE),
-(001009, 'Union Bank of India BTM 2nd Stage', 'No. 65, 7th Main, BTM 2nd Stage, Bengaluru - 560076', 'UBIN0001009',TRUE),
-(001010, 'Kotak Mahindra Bank JP Nagar', 'No. 21, 24th Main, JP Nagar 5th Phase, Bengaluru - 560078', 'KKBK0001010',TRUE);
+(001001, 'SBI Jayanagar', 'No. 45, 10th Main, 4th Block, Jayanagar, Bengaluru - 560011', 'SBIN0001001', TRUE),
+(001002, 'SBI Koramangala', 'No. 12, 80 Feet Road, 5th Block, Koramangala, Bengaluru - 560095', 'SBIN0001002', TRUE),
+(001003, 'SBI Indiranagar', 'No. 100, CMH Road, 1st Stage, Indiranagar, Bengaluru - 560038', 'SBIN0001003', TRUE),
+(001004, 'SBI Whitefield', 'No. 3, ITPL Main Road, Whitefield, Bengaluru - 560066', 'SBIN0001004', TRUE),
+(001005, 'SBI Malleshwaram', 'No. 58, Sampige Road, Malleshwaram, Bengaluru - 560003', 'SBIN0001005', TRUE),
+(001006, 'SBI Rajajinagar', 'No. 22, 1st Block, Rajajinagar, Bengaluru - 560010', 'SBIN0001006', TRUE),
+(001007, 'SBI HSR Layout', 'No. 9, 27th Main, Sector 2, HSR Layout, Bengaluru - 560102', 'SBIN0001007', TRUE),
+(001008, 'SBI Electronic City', 'No. 67, Hosur Road, Phase 1, Electronic City, Bengaluru - 560100', 'SBIN0001008', TRUE),
+(001009, 'SBI Yelahanka', 'No. 14, New Town Road, Yelahanka, Bengaluru - 560064', 'SBIN0001009', TRUE),
+(001010, 'SBI BTM Layout', 'No. 31, 16th Cross, 2nd Stage, BTM Layout, Bengaluru - 560076', 'SBIN0001010', TRUE);

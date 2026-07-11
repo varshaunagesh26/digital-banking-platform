@@ -11,19 +11,19 @@ import lombok.*;
 @NoArgsConstructor
 public class Account {
 
-    @Schema(name = "Account Number")
+    @Schema(description = "Account Number")
     private Long accountNumber;
 
-    @Schema(name = "Account Type")
+    @Schema(description = "Account Type")
     private String accountType;
 
-    @Schema(name = "Account Holder")
+    @Schema(description = "Account Holder")
     private Customer accountHolder;
 
-    @Schema(name = "Account Branch")
+    @Schema(description = "Account Branch")
     private Branch accountBranch;
 
-    @Schema(name = "Account Balance")
+    @Schema(description = "Account Balance")
     private Double accountBalance;
 
 }

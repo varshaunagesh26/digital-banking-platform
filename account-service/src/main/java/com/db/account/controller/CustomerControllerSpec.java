@@ -32,7 +32,9 @@ public interface CustomerControllerSpec {
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Customer updating",
             required = true,
-            content = @Content(schema = @Schema(implementation = Customer.class))
+            content = @Content(
+                    mediaType =  MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = Customer.class))
     )
     ResponseEntity<Customer> createCustomer(
             @RequestBody Customer customerDto);

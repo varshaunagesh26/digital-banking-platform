@@ -1,8 +1,5 @@
 package com.db.account.config;
 
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.MediaType;
-import org.springdoc.core.customizers.OperationCustomizer;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
@@ -22,16 +19,4 @@ public class SwaggerConfiguration {
 
 
     }
-    @Bean
-    public OperationCustomizer customizer() {
-        return (operation, handlerMethod) -> {
-            if (operation.getRequestBody() != null) {
-                operation.getRequestBody()
-                        .content(new Content()
-                                .addMediaType("application/json", new MediaType()));
-            }
-            return operation;
-        };
-    }
-
 }

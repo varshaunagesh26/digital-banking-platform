@@ -12,31 +12,30 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Customer {
 
-    @Schema(name = "customer id")
+    @Schema(description = "customer id")
     private Long customerId;
 
-    @Schema(name = "First Name", example = "John")
+    @Schema(description = "First Name", example = "John")
     private String firstName;
 
-    @Schema(name = "Last Name", example = "Doe")
+    @Schema(description = "Last Name", example = "Doe")
     private String lastName;
 
-    @Schema(name = "Date of Birth", example = "1997-01-01" )
+    @Schema(description = "Date of Birth", example = "1997-01-01" )
     private Date customerDOB;
 
-    @Schema(name = "Phone number")
+    @Schema(description = "Phone number")
     private Long phone;
 
-    @Schema(name = "Email")
+    @Schema(description = "Email")
     private String customerEmail;
 
-    @Schema(name = "Address")
+    @Schema(description = "Address")
     private String customerAddress;
 
-    @Schema(name = "Account numbers")
+    @Schema(description = "Account numbers")
     private List<Long> accountNumbers;
 
 }

@@ -14,19 +14,19 @@ import java.util.List;
 @Data
 public class Branch {
 
-    @Schema(name = "Branch Code")
+    @Schema(description = "Branch Code")
     private Long branchCode;
 
-    @Schema(name = "Branch Name")
+    @Schema(description = "Branch Name")
     private String branchName;
 
-    @Schema(name = "Branch Address")
+    @Schema(description = "Branch Address")
     private String branchAddress;
 
-    @Schema(name = "Branch IFSC")
+    @Schema(description = "Branch IFSC")
     private String branchIFSC;
 
-    @Schema(name = "Account Number")
+    @Schema(description = "Account Number")
     private List<Long> accountNumbers;
 
 }
