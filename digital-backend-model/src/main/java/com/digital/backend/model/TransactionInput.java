@@ -10,6 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 public class TransactionInput {
     Long toAccountNumber;
+    String toIFSCCode;
     Long fromAccountNumber;
+    String fromIFSCCode;
     Double amount;
 }

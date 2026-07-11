@@ -20,8 +20,14 @@ public class Transaction {
     @Schema(name = "fromAccountNumber")
     private Long fromAccountNumber;
 
+    @Schema(name = "fromIFSCCode")
+    private String fromIFSCCode;
+
     @Schema(name = "toAccountNumber")
     private Long toAccountNumber;
+
+    @Schema(name = "toIFSCCode")
+    private String toIFSCCode;
 
     @Schema(name = "amount")
     private Double amount;
