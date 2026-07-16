@@ -1,0 +1,1 @@
+ALTER TABLE payment.payment ALTER COLUMN id TYPE INT;
