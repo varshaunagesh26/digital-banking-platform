@@ -1,0 +1,2 @@
+ALTER TABLE account.event_history
+ADD CONSTRAINT uc_event_history_transaction_number UNIQUE (transaction_number);

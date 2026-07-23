@@ -1,10 +1,9 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   application:
     name: account-service
-
 
   flyway:
     enabled: true
@@ -12,6 +11,7 @@ spring:
     schemas: account
     locations: classpath:db/migrations
     repair-on-migrate: true
+    validate-on-migrate: false
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?schemas=account&serverTimezone=Asia/Calcutta
@@ -21,11 +21,16 @@ spring:
     hikari:
       schema: account
 
+  config:
+    import:
+      - classpath:kafka.yml
+
   logging:
     config: classpath:logback-spring.xml
     level:
-      org:
-        flywaydb: DEBUG
+      org.flywaydb: DEBUG
+      org.springframework.kafka: INFO
+      com.db.account: DEBUG
 
 
 springdoc:
@@ -37,11 +42,3 @@ springdoc:
     path: /swagger-ui.html
     doc-expansion: none
     model-and-view-allowed: true
-
-  config:
-    import:
-      - classpath:kafka.yml
-logging:
-  level:
-    org.springframework.kafka: INFO
-    com.db.account: DEBUG

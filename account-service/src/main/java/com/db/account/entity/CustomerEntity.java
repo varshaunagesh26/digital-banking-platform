@@ -44,6 +44,7 @@ public class CustomerEntity {
     private String customerAddress;
 
     @OneToMany(mappedBy = "accountHolder", cascade = CascadeType.ALL,  orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<AccountEntity> customerAccounts = new ArrayList<>();
 
     @Column(name = "is_active")

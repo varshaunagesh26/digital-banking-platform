@@ -153,11 +153,11 @@ public class TransactionService {
                 .orElseThrow(() -> new RuntimeException("Account not found: " + accountNumber));
 
         if (Boolean.FALSE.equals(account.getIsActive())) {
-
+            log.error("Account {} has been deactivated", accountNumber);
             transactionEvent.setStatus(String.valueOf(TransactionStatus.FAILED));
             updateEventHistory(transactionEvent, TransactionStatus.FAILED);
             return;
-        }      log.error("Account {} has been deactivated", accountNumber);
+        }
 
 
         double amount = Double.parseDouble(transactionEvent.getAmount());

@@ -1,4 +1,4 @@
-INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6001, 'savings', 86000.00, 23, 4, true);
-INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6002, 'current', 52000.00, 18, 5, true);
-INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6003, 'salary', 25000.00, 3, 9, true);
-INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6004, 'savings', 80000.00, 6, 7, true);
+INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6001, 'savings', 86000.00, 27, 4, true);
+INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6002, 'current', 52000.00, 42, 5, true);
+INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6003, 'salary', 25000.00, 38, 9, true);
+INSERT INTO account.account (account_number, account_type, account_balance, customer_id, branch_id, is_active) VALUES(6004, 'savings', 80000.00, 32, 7, true);
